@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lmsapp.webui", "lmsapp.webui\lmsapp.webui.csproj", "{51169917-9BC9-4D12-8D5C-91749ACC839D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lmsapp.entity", "lmsapp.entity\lmsapp.entity.csproj", "{07251229-A56E-4221-846C-AA43ACFC1DE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lmsapp.data", "lmsapp.data\lmsapp.data.csproj", "{0575D551-3A71-434B-BDEE-878B927187C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lmsapp.business", "lmsapp.business\lmsapp.business.csproj", "{F328284E-F869-4CA2-B237-517BAF1FA7CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{51169917-9BC9-4D12-8D5C-91749ACC839D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51169917-9BC9-4D12-8D5C-91749ACC839D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51169917-9BC9-4D12-8D5C-91749ACC839D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51169917-9BC9-4D12-8D5C-91749ACC839D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07251229-A56E-4221-846C-AA43ACFC1DE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07251229-A56E-4221-846C-AA43ACFC1DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07251229-A56E-4221-846C-AA43ACFC1DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07251229-A56E-4221-846C-AA43ACFC1DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0575D551-3A71-434B-BDEE-878B927187C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0575D551-3A71-434B-BDEE-878B927187C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0575D551-3A71-434B-BDEE-878B927187C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0575D551-3A71-434B-BDEE-878B927187C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F328284E-F869-4CA2-B237-517BAF1FA7CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F328284E-F869-4CA2-B237-517BAF1FA7CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F328284E-F869-4CA2-B237-517BAF1FA7CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F328284E-F869-4CA2-B237-517BAF1FA7CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

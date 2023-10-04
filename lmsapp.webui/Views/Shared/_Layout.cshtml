@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="~/css/bootstrap.min.css">
+  <link rel="stylesheet" href="~/css/main.css">
+  <link rel="icon" href="~/img/python.svg" type="image/x-icon">
+  @RenderSection("title", required: true)
+  <style>
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+  @RenderSection("css_files", required: false)
+</head>
+
+<body>
+  <nav class="navbar sticky-top navbar-dark bg-dark navbar-expand-md">
+    <div class="container">
+      <a class="navbar-brand" href="/" style="color: #F50057;">LMSApp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a href="~/" class="nav-link">Courses</a>
+          </li>
+          @if (User.Identity.IsAuthenticated)
+          {
+            if (User.IsInRole("Instructor"))
+            {
+              <li class="nav-item">
+                <a asp-controller="Instructor" asp-action="Index" class="nav-link">My Lectures</a>
+              </li>
+            }
+            <li class="nav-item">
+              <a asp-controller="Course" asp-action="GetCourses" class="nav-link">Collections</a>
+            </li>
+            if (User.IsInRole("Admin"))
+            {
+              <li class="nav-item">
+                <a asp-controller="Admin" asp-action="Panel" class="nav-link">Admin Panel</a>
+              </li>
+            }
+          }
+        </ul>
+        <form class="ms-auto" asp-controller="Product" asp-action="Index" method="POST">
+          <div class="input-group mb-1 mt-1">
+            <input type="text" name="q" class="form-control" style="background-color:transparent;color:#ffffff;">
+            <button class="btn btn-outline-info" type="submit">Search</button>
+          </div>
+        </form>
+        <ul class="navbar-nav ms-auto">
+          @if (User.Identity.IsAuthenticated)
+          {
+            <li class="nav-item">
+              <a class="nav-link"> @User.Identity.Name.ToUpper() </a>
+            </li>
+            <li class="nav-item">
+              <a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a>
+            </li>
+          }
+          else
+          {
+            <li class="nav-item">
+              <a asp-controller="Account" asp-action="Login" class="nav-link">Login</a>
+            </li>
+            <li class="nav-item">
+              <a asp-controller="Account" asp-action="Register" class="nav-link">Register</a>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="content"> @RenderBody()</div>
+  @if (TempData["message"] != null)
+  {
+    <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))" />
+  }
+  <footer id="footer" class="py-5 bg-dark text-white text-center mt-3 fs-1">LMSApp</footer>
+  @RenderSection("JavaScript", false)
+  <script src="~/js/main.js"></script>
+  <script src="~/js/bootstrap.js"></script>
+</body>
+
+</html>

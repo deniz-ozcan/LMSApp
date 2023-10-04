@@ -1,0 +1,48 @@
+@model Course
+@section title {
+  <title>Course Details | LMSApp</title>
+}
+<div class="container mt-3">
+  <div class="row">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-3">
+          <img src="@Model.ImageUrl" alt="@Model.Title" class="card-img-top img-fluid" style="border: none;"/>
+        </div>
+        <div class="col-9">
+          <div class="card-body">
+            <div class="list-group list-group-flush fs-5">
+              <li class="list-group-item" style="border:none;"><h1 class="fs-4" style="color:#000;display:inline;">@Model.Title</h1></li>
+              <li class="list-group-item" style="border:none;color:#666;">@Model.Description</li>
+              <li class="list-group-item" style="border:none;color:#666;">Instructor: @Model.Instructor </li>
+              <li class="list-group-item" style="border:none;color:#666;">Category: @Model.Category</li>
+              <li class="list-group-item" style="border:none;color:#666;">Enrollment Count: @Model.EnrollmentCount</li>
+              <li class="list-group-item" style="border:none;color:#666;">Total Hours: @Model.TotalHours</li>
+              <li class="list-group-item" style="border:none;color:#666;">Total Lectures: @Model.TotalLectures</li>
+              <li class="list-group-item" style="border:none;color:#666;">Level: @Model.Level</li>
+            </div>
+          </div>
+          <div class="list-group list-group-horizontal">
+              <li class="list-group-item p-0 pt-2 fs-4 ms-5" style="font-size:1rem;border:none;">
+                <ul class="list-group list-group-horizontal" style="list-style-type: none;font-weight: 400;color:#FFC000">
+                  @for (int j = 0; j < (int)Model.Rate; j++){<li style="color:#FFC000;">★</li>}
+                  @for (int k = 0; k < 5 - (int)Model.Rate; k++){<li style="color:#D8D8D8;">★</li>}
+                </ul>
+              </li>
+          </div>
+          <div class="input-group justify-content-center mb-3">
+            <form asp-controller="Cart" asp-action="AddToCart" method="POST" class="form-inline">
+              <input type="hidden" name="productId" value="@Model.Id">
+              <div class="input-group mb-3">
+                <input type="number" name="quantity" class="form-control" value="1" min="1" step="1" style="width: 100px;">
+                <div class="input-group-append">
+                  <button class="btn btn-outline-primary btn-lg" type="submit" style="min-width:100px;background-color:#f27a1a">Enroll</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

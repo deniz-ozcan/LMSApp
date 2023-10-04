@@ -1,0 +1,39 @@
+@model LoginModel
+@section title {<title>Login | ScrapApp</title>}
+<div class="container-sm mt-5" >
+  <div class="row justify-content-center">
+    <div class="card col-6 p-0">
+      <div class="card-header bg-dark" style="color:#109801;font-size:30px;">
+        <div class="card-title text-center pt-3">LOGIN</div>
+      </div>
+      <div class="card-body">
+        <form class="form-group" asp-controller="Account" asp-action="Login" method="POST">
+          <div class="form-group">
+            <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl">
+            <div asp-validation-summary="All" class="text-danger mt-3 mb-3"></div>      
+            <div class="row justify-content-center">
+              <div class="col-7 mb-3">
+                <input class="form-control" asp-for="Email" placeholder="E-mail">
+                <span asp-validation-for="Email" class="text-danger"></span>
+              </div>
+              <div class="col-7 mb-3">
+                <input class="form-control" asp-for="Password" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+              </div>
+              <div class="col-6 d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-primary">Login</button>
+                <a href="/account/forgotpassword" class="btn btn-link" style="text-decoration:none;color:#4e5867;">Şifremi Unuttum</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JavaScript
+{
+  <script src="~/js/jquery.validate.js"></script>
+  <script src="~/js/jquery.validate.unobtrusive.js"></script>
+}

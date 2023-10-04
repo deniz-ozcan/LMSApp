@@ -1,0 +1,42 @@
+@model List<Category>
+<div class="filtme justify-content-center">
+  <form class="list-group align-self-center" action="/Products/FilterProducts">
+    <div class="accordion accordion-container" id="acco" style="min-width: 245px;">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Price" aria-expanded="false" aria-controls="Price">
+            Level
+          </button>
+        </h2>
+        <div id="Price" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Rate" aria-expanded="false" aria-controls="Rate">Rate</button>
+        </h2>
+        <div id="Rate" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            @for (int i = 5; i > 0; i--){
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="rate_rad" id="rate_rad_@i" value="@i">
+              <label class="form-check-label" for="rate_rad_@i">
+                <ul class="list-group list-group-horizontal" style="list-style-type: none;">
+                  @for (int j = 0; j < i; j++){<li style="color:#FFC000;">★</li>}
+                  @for (int k = 0; k < 5-i; k++){<li style="color:#D8D8D8;">★</li>}
+                </ul>
+                </label>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="list-group-item" type="submit" style="border: none;" id="search_Button" >
+      <li class="btn btn-outline-info">Filter Courses</li>
+    </button>
+  </form>
+</div>

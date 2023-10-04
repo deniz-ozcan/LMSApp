@@ -1,0 +1,75 @@
+@model RoleDetails
+
+@section title {
+  <title>Edit Role | ScrapApp</title>
+}
+
+<form class="row mt-3" asp-controller="Admin" asp-action="RoleUpdate">
+  <input type="hidden" name="RoleId" value="@Model.Role.Id">
+  <input type="hidden" name="RoleName" value="@Model.Role.Name">
+  <div class="card col-6 p-0" style="border-right:0px;border-bottom-right-radius:0px;">
+    <div class="card-header" style="background-color:#606060;color:#23cf10;font-size:30px;border-top-right-radius:0px;">
+      <div class="card-title text-center pt-3">
+        <h1 class="h3">Add to @Model.Role.Name</h1>
+      </div>
+    </div>
+    <div class="card-body" style="border-right: 1px solid rgba(0,0,0,.125)">
+      <table class="table table-bordered table-sm">
+        @if (Model.NonMembers.Count() == 0)
+        {
+          <tr>
+            <td>All Users are in this role.</td>
+          </tr>
+        }
+        else
+        {
+          @foreach (var user in Model.NonMembers)
+          {
+            <tr>
+              <td>@user.UserName</td>
+              <td style="width: 150px;">
+                <input type="checkbox" name="IdsToAdd" value="@user.Id">
+              </td>
+            </tr>
+          }
+        }
+      </table>
+    </div>
+  </div>
+  <div class="card col-6 p-0" style="border-left: 0px;border-bottom-left-radius:0px;">
+    <div class="card-header" style="background-color:#606060;color:#ff8800;font-size:30px;border-top-left-radius:0px;">
+      <div class="card-title text-center pt-3">
+        <h1 class="h3">Remove from @Model.Role.Name</h1>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered table-sm">
+        @if (Model.Members.Count() == 0)
+        {
+          <tr>
+            <td>Role ait kullanıcı yok.</td>
+          </tr>
+        }
+        else
+        {
+          @foreach (var user in Model.Members)
+          {
+            <tr>
+              <td>@user.UserName</td>
+              <td style="width: 150px;">
+                <input type="checkbox" name="IdsToDelete" value="@user.Id">
+              </td>
+            </tr>
+          }
+        }
+      </table>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3 mx-auto">
+      <div class="text-center">
+          <button type="submit" class="btn btn-outline-primary">Save Changes</button>
+      </div>
+    </div>  
+  </div>
+</form>

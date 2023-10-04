@@ -1,0 +1,60 @@
+@model RegisterModel
+
+@section title {
+  <title>Register | ScrapApp</title>
+}
+<div class="container-sm mt-3">
+  <div class="row justify-content-center">
+    <div class="card col-6 p-0">
+      <div class="card-header bg-info">
+        <div class="card-title text-center pt-3">Register</div>
+      </div>
+      <div class="card-body">
+        <form asp-controller="Account" class="form-group" asp-action="Register" method="POST">
+          <div class="form-group">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row mb-3">
+              <div class="col">
+                <input class="form-control" asp-for="UserName" placeholder="UserName">
+                <span asp-validation-for="UserName" class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input class="form-control" asp-for="Email" placeholder="Email">
+                <span asp-validation-for="Email" class="text-danger"></span>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input class="form-control" asp-for="FirstName" placeholder="FirstName">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input class="form-control" asp-for="LastName" placeholder="LastName">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col">
+                <input class="form-control" asp-for="Password" placeholder="Password">
+                <span asp-validation-for="Password" class="text-danger"></span>
+              </div>
+              <div class="col">
+                <input class="form-control" asp-for="RePassword" placeholder="RePassword">
+                <span asp-validation-for="RePassword" class="text-danger"></span>
+              </div>
+            </div>
+            <div class="mb-3 d-flex justify-content-center">
+              <button type="submit" class="btn btn-outline-primary">Register</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JavaScript
+  {
+  <script src="~/js/jquery.validate.js"></script>
+  <script src="~/js/jquery.validate.unobtrusive.js"></script>
+}

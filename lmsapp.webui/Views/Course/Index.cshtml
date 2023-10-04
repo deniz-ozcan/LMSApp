@@ -1,0 +1,84 @@
+@model ProductViewModel
+@section title {<title>Home | ScrapApp</title>}
+<div class="container-fluid mt-3">
+  <div class="row">
+    <div class="col-3" style="max-width:300px;">
+        @await Html.PartialAsync("_categories", Model.Categories)
+    </div>
+    <div class="col-9" style="min-width:1050px;">
+      <div class="row">
+        <div class="d-flex justify-content-end" style="margin-bottom: 5px;">
+          <select class="form-select" style="background-color:#20c997;color:#fff;">
+            <option value="" selected disabled>Sort By</option>
+            <option value="price_asc">High Price</option>
+            <option value="price_desc">Low Price</option>
+            <option value="rate_asc">High Rate</option>
+            <option value="rate_desc">Low Rate</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-group">
+        @if (Model.Products.Count == 0)
+        {
+          <div class="text-center fs-5 alertdanger">
+            <h1 class="h3">The product you are looking for was not found.</h1>
+          </div> 
+        }
+        else{
+          @foreach (var proc in Model.Products)
+          {
+            string cls = "";
+            if(proc.isUpdated==true){
+              cls = "bg-primary";
+            }
+            <a asp-controller="Product" asp-action="Detail" asp-route-id="@proc.Id" class="col-sm-3 mb-3" style="text-decoration:none;color:black;">
+              <div class="card mb-3 me-3 border-info @cls bg-dark popupcard">
+                <img src="@proc.Image" alt="" class="card-img-top img-fluid img-thumbnail"/>
+                <div class="card-body">
+                  <p class="card-title fs-6 info" style="color:#ff0000;display:inline;">@proc.Brand</p>
+                  <p class="card-title fs-6 info" style="color:#fff;display:inline;font-size:1rem;"> 
+                    @proc.Model @proc.Ram RAM @proc.Storage SSD @proc.Processor @proc.System @proc.Screen
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div class="list-group list-group-horizontal">
+                    <li class="list-group-item p-0 pt-2 itemsing1" style="font-size:1rem;border:none;">
+                      <ul class="list-group list-group-horizontal" style="list-style-type: none;font-weight: 400;color:#FFC000">
+                        @for (int i = 0; i < (int)proc.Rate ; i++){<li>★</li>}
+                        @for (int k = 0; k < 5 - (int)proc.Rate; k++){<li style="color:#D8D8D8;">★</li>}
+                      </ul>
+                    </li>
+                    <li class="list-group-item ms-auto itemsing2" style="font-weight: 700;font-size:1rem;border:none;color:#f27a1a">@((int)proc.Price) ₺</li>
+                  </div>
+                </div>
+              </div>
+            </a>
+          }
+        }
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Page navigation" class="mt-6">
+    <ul class="pagination justify-content-center">
+      @if(@Model.PageInfo.HasPrevious() == 1){
+        <li class="page-item">
+          <a href="~/" class="page-link">&laquo First Page</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page=@(Model.PageInfo.CurrentPage-1)">@(Model.PageInfo.CurrentPage-1)</a>
+        </li>
+      }
+      <li class="page-item active" aria-current="page">
+        <a class="page-link" href="?page=@Model.PageInfo.CurrentPage">@Model.PageInfo.CurrentPage</a>
+      </li>
+      @if(Model.PageInfo.HasNext() == 1){
+        <li class="page-item">
+          <a class="page-link" href="?page=@(Model.PageInfo.CurrentPage+1)">@(Model.PageInfo.CurrentPage+1)</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page=@Model.PageInfo.TotalPages()">Last Page &raquo</a> 
+        </li>
+      }
+    </ul>
+  </nav>
+</div>
