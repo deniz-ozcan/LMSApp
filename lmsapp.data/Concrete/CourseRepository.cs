@@ -1,15 +1,33 @@
 using Microsoft.EntityFrameworkCore;
 using lmsapp.data.Abstract;
 using lmsapp.entity;
+using Microsoft.AspNetCore.Identity;
 
 namespace lmsapp.data.Concrete
 {
     public class CourseRepository : GenericRepository<Course>, ICourseRepository
     {
         public CourseRepository(LMSContext context) : base(context) { }
+        private readonly UserManager<User> _userManager;
         private LMSContext LMSContext
         {
             get { return context as LMSContext; }
+        }
+
+        public void Enroll(int CourseId, string userId)
+        {
+            Course course =  LMSContext.Courses
+                            .Find(CourseId);
+            User user = _userManager.FindByIdAsync(userId).Result;
+            course.Students.Add(user);
+            LMSContext.SaveChanges();
+        }
+
+        public Task<List<Course>> GetAllCoursesAsync()
+        {
+            return LMSContext.Courses
+                .Include(c => c.Instructor)
+                .ToListAsync();
         }
 
         public Task<Course> GetCourseByIdAsync(int id)
@@ -23,6 +41,7 @@ namespace lmsapp.data.Concrete
         {
             return LMSContext.Courses
                 .Include(c => c.Instructor)
+                .OrderBy(c => c.Id)
                 .Where(c => string.IsNullOrEmpty(q) || c.Title.Contains(q) || c.Description.Contains(q))
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -44,13 +63,13 @@ namespace lmsapp.data.Concrete
                 .ToListAsync();
         }
 
-        public Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId)
-        {
-            return LMSContext.Enrollments
-                .Include(e => e.Course)
-                .Where(e => e.UserId == userId)
-                .Select(e => e.Course)
-                .ToListAsync();
-        }
+        // public Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId)
+        // {
+        //     return LMSContext.Enrollments
+        //         .Include(e => e.Course)
+        //         .Where(e => e.UserId == userId)
+        //         .Select(e => e.Course)
+        //         .ToListAsync();
+        // }
     }
 }

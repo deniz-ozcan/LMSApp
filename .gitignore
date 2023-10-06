@@ -11,7 +11,7 @@
 *.suo
 *.user
 *.sln.docstates
-
+*.pdf
 # Build results
 [Dd]ebug/
 [Rr]elease/

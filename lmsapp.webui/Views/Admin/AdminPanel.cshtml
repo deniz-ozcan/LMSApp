@@ -2,7 +2,7 @@
 @section title {
   <title>Admin Panel | ScrapApp</title>
 }
-@section css_files{
+@section css_files {
   <style>
     .accordion-item {
       background-color: #fff;
@@ -34,7 +34,7 @@
   <div class="row mb-3 justify-content-center">
     <button class="col-1 ms-3 btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#userAcc" aria-expanded="false" aria-controls="userAcc">Users</button>
     <button class="col-1 ms-3 btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#roleAcc" aria-expanded="false" aria-controls="roleAcc">Roles</button>
-    <button class="col-1 ms-3 btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#courseAcc" aria-expanded="false" aria-controls="courseAcc">Products</button>
+    <button class="col-1 ms-3 btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#courseAcc" aria-expanded="false" aria-controls="courseAcc">Courses</button>
   </div>
   <div class="accordion accordion-container" id="acco">
     <div class="accordion-item">
@@ -64,13 +64,6 @@
                     <td scope="row">@item.EmailConfirmed</td>
                     <td>
                       <a class="btn btn-outline-primary btn-sm" asp-controller="Admin" asp-action="UserEdit" asp-route-id="@item.Id">Edit</a>
-                      @if (!item.UserName.Equals("admin"))
-                      {
-                        <form asp-controller="Admin" asp-action="DeleteUser" method="POST" style="display: inline;">
-                          <input type="hidden" name="UserId" value="@item.Id">
-                          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                        </form>
-                      }
                     </td>
                   </tr>
                 }
@@ -107,10 +100,10 @@
                       <a class="btn btn-outline-primary btn-sm" asp-controller="Admin" asp-action="RoleEdit" asp-route-id="@item.Id">Edit</a>
                       @if (!item.Name.Equals("Admin"))
                       {
-                      <form asp-controller="Admin" asp-action="DeleteRole" method="POST" style="display: inline;">
-                        <input type="hidden" name="RoleId" value="@item.Id">
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
-                      </form>
+                        <form asp-controller="Admin" asp-action="DeleteRole" method="POST" style="display: inline;">
+                          <input type="hidden" name="RoleId" value="@item.Id">
+                          <button type="submit" class="btn btn-outline-danger btn-sm">Delete</button>
+                        </form>
                       }
                     </td>
                   </tr>
@@ -155,14 +148,13 @@
                               <th scope="col"><button class="btn colorbut">IMAGE<span aria-hidden="true"></span></button></th>
                               <th scope="col"><button class="btn colorbut">TITLE<span aria-hidden="true"></span></button></th>
                               <th scope="col"><button class="btn colorbut">DESCRIPTION<span aria-hidden="true"></span></button></th>
-                              <th scope="col"><button class="btn colorbut">CATEGORY<span aria-hidden="true"></span></button></th>
                               <th scope="col"><button class="btn colorbut">INSTRUCTOR<span aria-hidden="true"></span></button></th>
+                              <th scope="col"><button class="btn colorbut">ENROLLMENT<span aria-hidden="true"></span></button></th>
+                              <th scope="col"><button class="btn colorbut">LECTURES<span aria-hidden="true"></span></button></th>
+                              <th scope="col"><button class="btn colorbut">HOURS<span aria-hidden="true"></span></button></th>
+                              <th scope="col"><button class="btn colorbut">LEVEL<span aria-hidden="true"></span></button></th>
                               <th scope="col"><button class="btn colorbut">RATE<span aria-hidden="true"></span></button></th>
-                              <th scope="col"><button class="btn colorbut">ENROLLMENT COUNT<span aria-hidden="true"></span></button></th>
-                              <th scope="col"><button class="btn colorbut">PROCESSORS<span aria-hidden="true"></span></button></th>
-                              <th scope="col"><button class="btn colorbut">SYSTEM<span aria-hidden="true"></span></button></th>
-                              <th scope="col"><button class="btn colorbut">SCREEN<span aria-hidden="true"></span></button></th>
-                              <th scope="col"><button class="btn colorbut">Updated<span aria-hidden="true"></span></button></th>
+                              <th scope="col"><button class="btn colorbut">UPDATED<span aria-hidden="true"></span></button></th>
                               <th scope="col"></th>
                             </tr>
                           </thead>
@@ -171,47 +163,28 @@
                             {
                               <tr class="hoverme">
                                 <td><img src="@course.ImageUrl" width="80"></td>
-                                <td scope="row">@course.Title</td>
-                                <td scope="row">
-                                  @(@course.Description.Length > 10 ? @course.Description.Substring(0, 10) + "..." : @course.Description)
-                                </td>
-                                <td scope="row">@(course.Category)</td>
+                                <td scope="row">@(@course.Title.Length > 10 ? @course.Title.Substring(0, 10) + "..." : @course.Title)</td>
+                                <td scope="row">@(@course.Description.Length > 10 ? @course.Description.Substring(0, 10) + "..." : @course.Description)</td>
+                                <td scope="row">@course.Instructor.FirstName @course.Instructor.LastName</td>
                                 <td scope="row">@course.EnrollmentCount</td>
-                                <td scope="row">@course.Instructor</td>
-                                <td scope="row">@course.TotalHours</td>
                                 <td scope="row">@course.TotalLectures</td>
+                                <td scope="row">@course.TotalHours</td>
                                 <td scope="row">@course.Level</td>
                                 <td scope="row">
                                   <ul class="list-group list-group-horizontal" style="list-style-type: none;font-weight: 400;">
                                     @if ((int)course.Rate > 0)
                                     {
-                                      @for (int j = 0; j < (int)course.Rate; j++)
-                                      {
-                                        <li style="color:#FFC000;">★</li>
-                                      }
-                                      @for (int k = 0; k < 5 - (int)course.Rate; k++)
-                                      {
-                                        <li style="color:#D8D8D8;">★</li>
-                                      }
+                                      @for (int j = 0; j < (int)course.Rate; j++){<li style="color:#FFC000;">★</li>}
+                                      @for (int k = 0; k < 5 - (int)course.Rate; k++){<li style="color:#D8D8D8;">★</li>}
                                     }
-                                    else
-                                    {
-                                      <li style="color:#ff8800">
-                                        No Rating
-                                      </li>
-                                    }
+                                    else{<li style="color:#ff8800">No Rating</li>}
                                   </ul>
                                 </td>
-
                                 <td scope="row">
-                                  @if (course.isUpdated)
-                                  {
-                                    <img src="~/img/check.svg" width="25px" />
-                                  }
-                                  else
-                                  {
-                                    <img src="~/img/xmark.svg" width="25px" />
-                                  }
+                                  <div class="row justify-content-center">
+                                    @if (course.isUpdated){<img src="~/img/check.svg" style="width: 30px;"/>}
+                                    else{<img src="~/img/xmark.svg" style="width: 30px;"/>}
+                                  </div>
                                 </td>
                                 <td>
                                   <form asp-controller="Admin" asp-action="DeleteProduct">

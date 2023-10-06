@@ -8,5 +8,7 @@ namespace lmsapp.data.Abstract
         Task<Course> GetCourseByIdAsync(int id);
         Task<List<Course>> GetCoursesAsync(string q, int page, int pageSize);
         Task<int> GetCoursesCountAsync(string q);
+        Task<List<Course>> GetAllCoursesAsync();
+        void Enroll(int CourseId, string userId);
     }
 }

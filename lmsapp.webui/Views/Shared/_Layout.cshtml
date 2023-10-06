@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="~/css/bootstrap.min.css">
   <link rel="stylesheet" href="~/css/main.css">
-  <link rel="icon" href="~/img/python.svg" type="image/x-icon">
+  <link rel="icon" href="~/img/netcore.svg" type="image/x-icon">
   @RenderSection("title", required: true)
   <style>
     input[type=number] {
@@ -37,9 +37,12 @@
                 <a asp-controller="Instructor" asp-action="Index" class="nav-link">My Lectures</a>
               </li>
             }
-            <li class="nav-item">
-              <a asp-controller="Course" asp-action="GetCourses" class="nav-link">Collections</a>
-            </li>
+            if (User.IsInRole("Student"))
+            {
+              <li class="nav-item">
+              <a asp-controller="Course" asp-action="GetCourses" class="nav-link">My Learning</a>
+              </li>
+            }
             if (User.IsInRole("Admin"))
             {
               <li class="nav-item">
@@ -48,7 +51,7 @@
             }
           }
         </ul>
-        <form class="ms-auto" asp-controller="Product" asp-action="Index" method="POST">
+        <form class="ms-auto" asp-controller="Course" asp-action="Index" method="POST">
           <div class="input-group mb-1 mt-1">
             <input type="text" name="q" class="form-control" style="background-color:transparent;color:#ffffff;">
             <button class="btn btn-outline-info" type="submit">Search</button>

@@ -6,7 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\lmsapp.entity\lmsapp.entity.csproj" />
-    <ProjectReference Include="..\lmsapp.webui\lmsapp.webui.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.8">

@@ -8,7 +8,6 @@ namespace lmsapp.entity
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
         public Course Course { get; set; }
-        public User Student { get; set; }
         public bool IsSubmitted { get; set; }
     }
 }

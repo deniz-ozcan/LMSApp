@@ -75,5 +75,15 @@ namespace lmsapp.business.Concrete
             }
             return isValid;
         }
+
+        public Task<List<Course>> GetAllCoursesAsync()
+        {
+            return _unitofwork.Courses.GetAllCoursesAsync();
+        }
+
+        public void Enroll(int CourseId, string userId)
+        {
+            _unitofwork.Courses.Enroll(CourseId, userId);
+        }
     }
 }

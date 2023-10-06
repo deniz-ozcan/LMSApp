@@ -14,7 +14,7 @@
             <div class="list-group list-group-flush fs-5">
               <li class="list-group-item" style="border:none;"><h1 class="fs-4" style="color:#000;display:inline;">@Model.Title</h1></li>
               <li class="list-group-item" style="border:none;color:#666;">@Model.Description</li>
-              <li class="list-group-item" style="border:none;color:#666;">Instructor: @Model.Instructor </li>
+              <li class="list-group-item" style="border:none;color:#666;">Instructor: @Model.Instructor.FirstName @Model.Instructor.LastName </li>
               <li class="list-group-item" style="border:none;color:#666;">Category: @Model.Category</li>
               <li class="list-group-item" style="border:none;color:#666;">Enrollment Count: @Model.EnrollmentCount</li>
               <li class="list-group-item" style="border:none;color:#666;">Total Hours: @Model.TotalHours</li>

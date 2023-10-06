@@ -61,30 +61,8 @@ footer {
 .popupcard:hover {
   transform: translate(5px, -5px);
 }
-.popupcard:hover:before {
-  opacity: 1;
-}
-.popupcard:hover .info {
-  opacity: 1;
-  transform: translateY(0px);
-}
-.popupcard:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 2;
-  transition: 0.5s;
-  opacity: 0;
-}
 .popupcard img {
   width: 100%;
-  height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
   position: absolute;
@@ -94,10 +72,9 @@ footer {
 }
 .popupcard .info {
   position: relative;
+  top: 100px;
   z-index: 3;
-  color: #ffffff;
-  opacity: 0;
-  transform: translateY(30px);
+  color: #000;
   transition: 0.5s;
 }
 .popupcard .info h1 {
@@ -105,7 +82,7 @@ footer {
 }
 .popupcard .info p {
   letter-spacing: 1px;
-  font-size: 15px;
+  font-size: 12px;
   margin-top: 8px;
 }
 .itemsing1 {
@@ -202,7 +179,7 @@ footer {
   max-width: 550px;
   padding: 10px;
   border-radius: 6px;
-  animation: 2s linear countdown1;
+  animation: 3s linear countdown1;
   position: absolute;
   bottom: 5%;
   right: 3%;
@@ -212,7 +189,7 @@ footer {
 .alertwarning::before {
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
-  animation: 2s linear countdown2;
+  animation: 3s linear countdown2;
   position: absolute;
   content: "";
   height: 5px;

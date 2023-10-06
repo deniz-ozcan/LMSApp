@@ -12,9 +12,9 @@ namespace lmsapp.entity
         [Required]
         public User Instructor { get; set; }
         [Required]
-        public string Category { get; set; }
+        public string InstructorId { get; set; }
         [Required]
-        public int EnrollmentCount { get; set; }
+        public string Category { get; set; }
         [Required]
         public float Rate { get; set; }
         [Required]
@@ -24,8 +24,9 @@ namespace lmsapp.entity
         [Required]
         public int TotalHours { get; set; }
         [Required]
-        public int TotalLectures { get; set; }
-        [Required]
         public string Level { get; set; }
+        public List<Assignment> Assignments { get; set; }
+        public List<Section> Sections { get; set; }
+        public List<User> Students { get; set; }
     }
 }
