@@ -43,9 +43,9 @@ namespace lmsapp.business.Concrete
                 ErrorMessage += "Title is required.";
                 isValid = false;
             }
-            if (string.IsNullOrEmpty(entity.Description))
+            if (string.IsNullOrEmpty(entity.VideoUrl))
             {
-                ErrorMessage += "Description is required.";
+                ErrorMessage += "Video Url is required.";
                 isValid = false;
             }
             return isValid;

@@ -10,6 +10,15 @@ namespace lmsapp.webui.Extensions
         {
             using (var scope = host.Services.CreateScope())
             {
+                using var LMSContext = scope.ServiceProvider.GetRequiredService<LMSContext>();
+                try
+                {
+                    LMSContext.Database.Migrate();
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("LMSContext migration failed");
+                }
                 using (var applicationContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>())
                 {
                     try
@@ -20,15 +29,6 @@ namespace lmsapp.webui.Extensions
                     {
                         Console.WriteLine("Application context migration failed");
                     }
-                }
-                using var LMSContext = scope.ServiceProvider.GetRequiredService<LMSContext>();
-                try
-                {
-                    LMSContext.Database.Migrate();
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("LMSContext migration failed");
                 }
             }
             return host;

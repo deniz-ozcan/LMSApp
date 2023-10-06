@@ -17,7 +17,7 @@ namespace lmsapp.webui.Identity
                 }
             }
             var users = configuration.GetSection("Data:Users");
-            int step = 0;
+            int step = 1;
             foreach (var section in users.GetChildren())
             {
                 var username = section.GetValue<string>("username");
@@ -50,16 +50,16 @@ namespace lmsapp.webui.Identity
                                 var fields = line.Split('|');
                                 await courseService.CreateAsync(new Course
                                 {
+                                    Instructor = user,
+                                    InstructorId = user.Id,
                                     Id = int.Parse(fields[0]),
                                     Title = fields[1],
                                     Description = fields[2],
-                                    Instructor = user,
-                                    InstructorId = user.Id,
                                     Rate = float.Parse(fields[3]),
-                                    TotalHours = int.Parse(fields[5]),
-                                    Level = fields[7],
-                                    Category = fields[8],
-                                    ImageUrl = fields[9],
+                                    TotalHours = int.Parse(fields[4]),
+                                    Level = fields[5],
+                                    Category = fields[6],
+                                    ImageUrl = fields[7],
                                     isUpdated = false
                                 });
                             }

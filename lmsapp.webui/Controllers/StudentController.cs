@@ -8,11 +8,9 @@ namespace lmsapp.webui.Controllers
 {
     public class StudentController: Controller
     {
-        private readonly IEnrollmentService _enrollmentService;
         private readonly ICourseService _courseService;
-        public StudentController(IEnrollmentService enrollmentService, ICourseService courseService)
+        public StudentController(ICourseService courseService)
         {
-            _enrollmentService = enrollmentService;
             _courseService = courseService;
         }
 

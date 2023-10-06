@@ -58,7 +58,8 @@ namespace lmsapp.webui
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICourseService, CourseManager>();
-            services.AddScoped<IEnrollmentService, EnrollmentManager>();
+            services.AddScoped<ISectionService, SectionManager>();
+            services.AddScoped<IContentService, ContentManager>();
             services.AddScoped<IAssignmentService, AssignmentManager>();
 
             services.AddScoped<IEmailSender, SmtpEmailSender>(i =>

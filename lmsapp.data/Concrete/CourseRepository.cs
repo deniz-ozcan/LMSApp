@@ -3,22 +3,21 @@ using lmsapp.data.Abstract;
 using lmsapp.entity;
 using Microsoft.AspNetCore.Identity;
 
+
 namespace lmsapp.data.Concrete
 {
     public class CourseRepository : GenericRepository<Course>, ICourseRepository
     {
         public CourseRepository(LMSContext context) : base(context) { }
-        private readonly UserManager<User> _userManager;
         private LMSContext LMSContext
         {
             get { return context as LMSContext; }
         }
 
-        public void Enroll(int CourseId, string userId)
+        public void Enroll(int CourseId, User user)
         {
             Course course =  LMSContext.Courses
                             .Find(CourseId);
-            User user = _userManager.FindByIdAsync(userId).Result;
             course.Students.Add(user);
             LMSContext.SaveChanges();
         }
@@ -63,13 +62,9 @@ namespace lmsapp.data.Concrete
                 .ToListAsync();
         }
 
-        // public Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId)
-        // {
-        //     return LMSContext.Enrollments
-        //         .Include(e => e.Course)
-        //         .Where(e => e.UserId == userId)
-        //         .Select(e => e.Course)
-        //         .ToListAsync();
-        // }
+        public Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

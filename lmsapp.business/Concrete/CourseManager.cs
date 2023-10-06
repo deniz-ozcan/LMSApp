@@ -81,9 +81,9 @@ namespace lmsapp.business.Concrete
             return _unitofwork.Courses.GetAllCoursesAsync();
         }
 
-        public void Enroll(int CourseId, string userId)
+        public void Enroll(int CourseId, User user)
         {
-            _unitofwork.Courses.Enroll(CourseId, userId);
+            _unitofwork.Courses.Enroll(CourseId, user);
         }
     }
 }

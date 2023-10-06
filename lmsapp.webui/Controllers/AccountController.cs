@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using lmsapp.business.Abstract;
 using lmsapp.webui.EmailServices;
 using lmsapp.webui.Extensions;
-using lmsapp.webui.Identity;
 using lmsapp.webui.Models;
 using lmsapp.entity;
 
