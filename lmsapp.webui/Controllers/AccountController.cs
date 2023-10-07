@@ -4,7 +4,7 @@ using lmsapp.business.Abstract;
 using lmsapp.webui.EmailServices;
 using lmsapp.webui.Extensions;
 using lmsapp.webui.Models;
-using lmsapp.entity;
+using lmsapp.webui.Identity;
 
 namespace lmsapp.webui.Controllers
 {

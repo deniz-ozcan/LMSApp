@@ -50,7 +50,6 @@ namespace lmsapp.webui.Identity
                                 var fields = line.Split('|');
                                 await courseService.CreateAsync(new Course
                                 {
-                                    Instructor = user,
                                     InstructorId = user.Id,
                                     Id = int.Parse(fields[0]),
                                     Title = fields[1],

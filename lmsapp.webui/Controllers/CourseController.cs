@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using lmsapp.business.Abstract;
 using lmsapp.entity;
 using lmsapp.webui.Models;
 using Microsoft.AspNetCore.Identity;
+using lmsapp.webui.Identity;
+using Newtonsoft.Json;
 
 namespace lmsapp.webui.Controllers
 {
@@ -38,15 +39,20 @@ namespace lmsapp.webui.Controllers
             return course == null ? NotFound() : View(course);
         }
         [HttpPost]
-        public IActionResult Enroll(int id)
+        public IActionResult Enroll(int courseId)
         {
+
             var userId = _userManager.GetUserId(User);
             if (userId == null || !User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
             }
-            _enrollmentService.Enroll(id, userId);
-            return RedirectToAction("Detail", new { id });
+            _enrollmentService.CreateAsync(new Enrollment()
+            {
+                CourseId = courseId,
+                UserId = userId,
+            });
+            return RedirectToAction("GetEnrollments", "Student");
         }
     }
 }

@@ -10,8 +10,6 @@ namespace lmsapp.entity
         [Required]
         public string Description { get; set; }
         [Required]
-        public User Instructor { get; set; }
-        [Required]
         public string InstructorId { get; set; }
         [Required]
         public string Category { get; set; }
@@ -29,5 +27,6 @@ namespace lmsapp.entity
         public string Level { get; set; }
         public List<Assignment> Assignments { get; set; }
         public List<Section> Sections { get; set; }
+        public List<Enrollment> Enrollments { get; set; }
     }
 }

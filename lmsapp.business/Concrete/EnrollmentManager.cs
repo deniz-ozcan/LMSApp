@@ -32,9 +32,5 @@ namespace lmsapp.business.Concrete
             _unitofwork.Enrollments.Delete(entity);
             _unitofwork.Save();
         }
-        public void Enroll(int CourseId, string userId)
-        {
-            _unitofwork.Enrollments.Enroll(CourseId, userId);
-        }
     }
 }

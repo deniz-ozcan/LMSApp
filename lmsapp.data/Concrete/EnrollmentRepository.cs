@@ -10,16 +10,5 @@ namespace lmsapp.data.Concrete
         {
             get { return context as LMSContext; }
         }
-
-        public void Enroll(int CourseId, string userId)
-        {
-            var enrollment = new Enrollment
-            {
-                CourseId = CourseId,
-                StudentId = userId
-            };
-            LMSContext.Enrollments.Add(enrollment);
-            LMSContext.SaveChanges();
-        }
     }
 }

@@ -14,7 +14,7 @@
             <div class="list-group list-group-flush fs-5">
               <li class="list-group-item" style="border:none;"><h1 class="fs-4" style="color:#000;display:inline;">@Model.Title</h1></li>
               <li class="list-group-item" style="border:none;color:#666;">@Model.Description</li>
-              <li class="list-group-item" style="border:none;color:#666;">Instructor: @Model.Instructor.FirstName @Model.Instructor.LastName </li>
+              @* <li class="list-group-item" style="border:none;color:#666;">Instructor: @Model.Instructor.FirstName @Model.Instructor.LastName </li> *@
               <li class="list-group-item" style="border:none;color:#666;">Category: @Model.Category</li>
               <li class="list-group-item" style="border:none;color:#666;">Total Hours: @Model.TotalHours</li>
               <li class="list-group-item" style="border:none;color:#666;">Level: @Model.Level</li>
@@ -28,13 +28,15 @@
                 </ul>
               </li>
           </div>
-
-          <div class="input-group justify-content-center mb-3">
-            <form asp-controller="Course" asp-action="Enroll" method="POST" class="form-inline">
-              <input type="hidden" name="courseId" value= "@Model.Id">
-              <button class="btn btn-outline-primary btn-lg" type="submit" style="min-width:100px;background-color:#f27a1a">Enroll</button>
-            </form>
-          </div>
+          @if(!User.IsInRole("Admin"))
+          {
+            <div class="input-group justify-content-center mb-3">
+              <form asp-controller="Course" asp-action="Enroll" method="POST" class="form-inline">
+                <input type="hidden" name="courseId" value= "@Model.Id">
+                <button class="btn btn-outline-primary btn-lg" type="submit" style="min-width:100px;background-color:#f27a1a">Enroll</button>
+              </form>
+            </div>
+          }
         </div>
       </div>
     </div>

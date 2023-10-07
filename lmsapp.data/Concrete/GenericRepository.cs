@@ -10,10 +10,6 @@ namespace lmsapp.data.Concrete
         {
             context = ctx;
         }
-        public void Create(TEntity entity)
-        {
-            context.Set<TEntity>().Add(entity);
-        }
 
         public async Task CreateAsync(TEntity entity)
         {

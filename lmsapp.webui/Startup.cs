@@ -89,7 +89,7 @@ namespace lmsapp.webui
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Course}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(name: "Course", pattern: "Course", defaults: new { controller = "Course", action = "Index" });
                 endpoints.MapControllerRoute(name: "CourseDetails", pattern: "{url}", defaults: new { controller = "Course", action = "Detail" });
-                endpoints.MapControllerRoute(name: "Enrollments", pattern: "Enrollments", defaults: new { controller = "Cart", action = "GetEnrollments" });
+                endpoints.MapControllerRoute(name: "Collection", pattern: "Collection", defaults: new { controller = "Student", action = "GetEnrollments" });
                 endpoints.MapControllerRoute(name: "SearchCourses", pattern: "Search/Courses", defaults: new { controller = "Course", action = "Search" });
                 endpoints.MapControllerRoute(name: "AdminCourses", pattern: "Admin/Courses", defaults: new { controller = "Admin", action = "Courses" });
                 endpoints.MapControllerRoute(name: "AdminPanel", pattern: "Admin/Panel", defaults: new { controller = "Admin", action = "AdminPanel" });

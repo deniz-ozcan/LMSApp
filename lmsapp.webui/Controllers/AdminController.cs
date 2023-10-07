@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using lmsapp.business.Abstract;
-using lmsapp.entity;
+using lmsapp.webui.Identity;
 using lmsapp.webui.Models;
 
 namespace lmsapp.webui.Controllers
