@@ -74,7 +74,7 @@ namespace lmsapp.webui
 
             services.AddControllersWithViews();
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService, IEnrollmentService enrollmentService)
         {
             app.UseStaticFiles();
             if (env.IsDevelopment())
@@ -89,7 +89,7 @@ namespace lmsapp.webui
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Course}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(name: "Course", pattern: "Course", defaults: new { controller = "Course", action = "Index" });
                 endpoints.MapControllerRoute(name: "CourseDetails", pattern: "{url}", defaults: new { controller = "Course", action = "Detail" });
-                endpoints.MapControllerRoute(name: "Collection", pattern: "Collection", defaults: new { controller = "Student", action = "GetEnrollments" });
+                endpoints.MapControllerRoute(name: "Collection", pattern: "Collection", defaults: new { controller = "Student", action = "Enrollments" });
                 endpoints.MapControllerRoute(name: "SearchCourses", pattern: "Search/Courses", defaults: new { controller = "Course", action = "Search" });
                 endpoints.MapControllerRoute(name: "AdminCourses", pattern: "Admin/Courses", defaults: new { controller = "Admin", action = "Courses" });
                 endpoints.MapControllerRoute(name: "AdminPanel", pattern: "Admin/Panel", defaults: new { controller = "Admin", action = "AdminPanel" });
@@ -97,7 +97,7 @@ namespace lmsapp.webui
                 endpoints.MapControllerRoute(name: "AdminRoleEdit", pattern: "Admin/Role/{id?}", defaults: new { controller = "Admin", action = "RoleUpdate" });
                 endpoints.MapControllerRoute(name: "AdminRoleCreate", pattern: "Admin/Role/Create", defaults: new { controller = "Admin", action = "RoleCreate" });
             });
-            SeedIdentity.Seed(userManager, roleManager, courseService, configuration).Wait();
+            SeedIdentity.Seed(userManager, roleManager, courseService, configuration, enrollmentService).Wait();
         }
     }
 }

@@ -73,6 +73,8 @@ namespace lmsapp.webui.Controllers
                 Email = model.Email
             };
             var result = await _userManager.CreateAsync(user, model.Password);
+            await _userManager.AddToRoleAsync(user,  "Student");
+
             if (result.Succeeded)
             {
                 string code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

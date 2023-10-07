@@ -47,12 +47,8 @@ namespace lmsapp.webui.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            _enrollmentService.CreateAsync(new Enrollment()
-            {
-                CourseId = courseId,
-                UserId = userId,
-            });
-            return RedirectToAction("GetEnrollments", "Student");
+            _enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = userId});
+            return RedirectToAction("Enrollments", "Student");
         }
     }
 }

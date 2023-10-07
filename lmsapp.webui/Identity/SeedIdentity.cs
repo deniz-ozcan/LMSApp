@@ -6,7 +6,7 @@ namespace lmsapp.webui.Identity
 {
     public static class SeedIdentity
     {
-        public static async Task Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService, IConfiguration configuration)
+        public static async Task Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService, IConfiguration configuration, IEnrollmentService enrollmentService)
         {
             var roles = configuration.GetSection("Data:Roles").GetChildren().Select(x => x.Value).ToArray();
             foreach (var role in roles)
@@ -39,7 +39,6 @@ namespace lmsapp.webui.Identity
                     var result = await userManager.CreateAsync(user, password);
                     if (result.Succeeded)
                     {
-                        await userManager.AddToRoleAsync(user, role);
                         if (role == "Instructor")
                         {
                             var courseCount = section.GetValue<int>("courseCount");
@@ -64,6 +63,14 @@ namespace lmsapp.webui.Identity
                             }
                             step += courseCount;
                         }
+                        if(role == "Student"){
+                            var courses = section.GetValue<string>("Enrollments").Split(',').Select(x => int.Parse(x)).ToArray();
+                            foreach (var courseId in courses)
+                            {
+                                await enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = user.Id});
+                            }
+                        }
+                        await userManager.AddToRoleAsync(user, role);
                     }
                 }
             }

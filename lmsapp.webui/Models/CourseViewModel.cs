@@ -1,5 +1,4 @@
 using lmsapp.entity;
-using lmsapp.webui.Identity;
 
 namespace lmsapp.webui.Models
 {
@@ -36,6 +35,5 @@ namespace lmsapp.webui.Models
     {
         public PageInfo PageInfo { get; set; }
         public List<Course> Courses { get; set; }
-        public List<Category> Categories { get; set; }
     }
 }
