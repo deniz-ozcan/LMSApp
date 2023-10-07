@@ -20,15 +20,16 @@ namespace lmsapp.business.Concrete
             return entity;
         }
 
-        public bool Update(Course entity)
-        {            
+
+        public Task<Course> UpdateAsync(Course entity)
+        {
             if (Validation(entity))
             {
-                _unitofwork.Courses.Update(entity);
+                _unitofwork.Courses.UpdateAsync(entity);
                 _unitofwork.Save();
-                return true;
+                return Task.FromResult(entity);
             }
-            return false;
+            return null;
         }
         public void Delete(Course entity)
         {
@@ -80,6 +81,5 @@ namespace lmsapp.business.Concrete
         {
             return _unitofwork.Courses.GetAllCoursesAsync();
         }
-
     }
 }

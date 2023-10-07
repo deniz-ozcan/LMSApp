@@ -72,11 +72,28 @@ namespace lmsapp.webui.Controllers
         public IActionResult UserList() => View(_userManager.Users);
         public IActionResult RoleList() => View(_roleManager.Roles);
         public async Task<IActionResult> AdminPanel(){
+            // return View(new AdminPanelModel()
+            // {
+            //     Users = _userManager.Users,
+            //     Roles =  _roleManager.Roles,
+            //     Courses = await _courseService.GetAllCoursesAsync()
+            // });
+            var courses = await _courseService.GetAllCoursesAsync();
+            var instructorCourses = new List<InstructorCourse>();
+            foreach (var course in courses)
+            {
+                var instructor = await _userManager.FindByIdAsync(course.InstructorId);
+                instructorCourses.Add(new InstructorCourse()
+                {
+                    Course = course,
+                    Instructor = instructor
+                });
+            }
             return View(new AdminPanelModel()
             {
                 Users = _userManager.Users,
                 Roles =  _roleManager.Roles,
-                Courses = await _courseService.GetAllCoursesAsync()
+                Courses = instructorCourses
             });
         }
         public IActionResult RoleCreate() => View();
@@ -157,7 +174,6 @@ namespace lmsapp.webui.Controllers
             }
             return View(model);
         }
-        public async Task<IActionResult> Courses() => View( new CourseViewModel() { Courses = await _courseService.GetAllCoursesAsync() });
         public async Task<IActionResult> DeleteCourse(int id)
         {
             var entity = await _courseService.GetCourseByIdAsync(id);

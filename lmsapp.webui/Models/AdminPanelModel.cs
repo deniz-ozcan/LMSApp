@@ -8,6 +8,6 @@ namespace lmsapp.webui.Models
     {
         public IEnumerable<IdentityRole> Roles { get; set; }
         public IEnumerable<User> Users { get; set; }
-        public List<Course> Courses { get; set; }
+        public List<InstructorCourse> Courses { get; set; }
     }
 }

@@ -162,33 +162,33 @@
                             @foreach (var course in Model.Courses)
                             {
                               <tr class="hoverme">
-                                <td><img src="@course.ImageUrl" width="80"></td>
-                                <td scope="row">@(@course.Title.Length > 10 ? @course.Title.Substring(0, 10) + "..." : @course.Title)</td>
-                                <td scope="row">@(@course.Description.Length > 10 ? @course.Description.Substring(0, 10) + "..." : @course.Description)</td>
-                                @* <td scope="row">@course.Instructor.FirstName @course.Instructor.LastName</td> *@
-                                <td scope="row">@course.EnrollmentCount</td>
-                                <td scope="row">eklenecek</td>
-                                <td scope="row">@course.TotalHours</td>
-                                <td scope="row">@course.Level</td>
+                                <td><img src="@course.Course.ImageUrl" width="80"></td>
+                                <td scope="row">@(@course.Course.Title.Length > 10 ? @course.Course.Title.Substring(0, 10) + "..." : @course.Course.Title)</td>
+                                <td scope="row">@(@course.Course.Description.Length > 10 ? @course.Course.Description.Substring(0, 10) + "..." : @course.Course.Description)</td>
+                                <td scope="row">@course.Instructor.FirstName @course.Instructor.LastName</td>
+                                <td scope="row">@course.Course.EnrollmentCount</td>
+                                <td scope="row">Eklenecek</td>
+                                <td scope="row">@course.Course.TotalHours</td>
+                                <td scope="row">@course.Course.Level</td>
                                 <td scope="row">
                                   <ul class="list-group list-group-horizontal" style="list-style-type: none;font-weight: 400;">
-                                    @if ((int)course.Rate > 0)
+                                    @if ((int)course.Course.Rate > 0)
                                     {
-                                      @for (int j = 0; j < (int)course.Rate; j++){<li style="color:#FFC000;">★</li>}
-                                      @for (int k = 0; k < 5 - (int)course.Rate; k++){<li style="color:#D8D8D8;">★</li>}
+                                      @for (int j = 0; j < (int)course.Course.Rate; j++){<li style="color:#FFC000;">★</li>}
+                                      @for (int k = 0; k < 5 - (int)course.Course.Rate; k++){<li style="color:#D8D8D8;">★</li>}
                                     }
                                     else{<li style="color:#ff8800">No Rating</li>}
                                   </ul>
                                 </td>
                                 <td scope="row">
                                   <div class="row justify-content-center">
-                                    @if (course.isUpdated){<img src="~/img/check.svg" style="width: 30px;"/>}
+                                    @if (course.Course.isUpdated){<img src="~/img/check.svg" style="width: 30px;"/>}
                                     else{<img src="~/img/xmark.svg" style="width: 30px;"/>}
                                   </div>
                                 </td>
                                 <td>
                                   <form asp-controller="Admin" asp-action="DeleteProduct">
-                                    <input type="hidden" name="id" value="@course.Id" />
+                                    <input type="hidden" name="id" value="@course.Course.Id" />
                                     <button type="submit" class="btn btn-outline-danger">Delete</button>
                                   </form>
                                 </td>

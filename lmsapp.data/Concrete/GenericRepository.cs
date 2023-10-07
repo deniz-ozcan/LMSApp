@@ -21,11 +21,9 @@ namespace lmsapp.data.Concrete
             context.Set<TEntity>().Remove(entity);
         }
 
-        public bool Update(TEntity entity)
+        public async Task UpdateAsync(TEntity entity)
         {
-            context.Entry(entity).State = EntityState.Modified;
-            return true;
+            await Task.Run(() => context.Set<TEntity>().Update(entity));
         }
-
     }
 }

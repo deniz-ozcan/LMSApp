@@ -4,9 +4,9 @@ using lmsapp.entity;
 
 namespace lmsapp.webui.Identity
 {
-    public static class SeedIdentity
+    public static class SeedData
     {
-        public static async Task Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService, IConfiguration configuration, IEnrollmentService enrollmentService)
+        public static async Task Seed(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService, IConfiguration configuration, IEnrollmentService enrollmentService, IAssignmentService assignmentService, IContentService contentService, ISectionService sectionService)
         {
             var roles = configuration.GetSection("Data:Roles").GetChildren().Select(x => x.Value).ToArray();
             foreach (var role in roles)
@@ -68,6 +68,9 @@ namespace lmsapp.webui.Identity
                             foreach (var courseId in courses)
                             {
                                 await enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = user.Id});
+                                Course crs = await courseService.GetCourseByIdAsync(courseId);
+                                crs.EnrollmentCount++;
+                                await courseService.UpdateAsync(crs);
                             }
                         }
                         await userManager.AddToRoleAsync(user, role);

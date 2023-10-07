@@ -23,7 +23,7 @@ namespace lmsapp.business.Concrete
             throw new NotImplementedException();
         }
 
-        public bool Update(Section entity)
+        public Task<Section> UpdateAsync(Section entity)
         {
             throw new NotImplementedException();
         }

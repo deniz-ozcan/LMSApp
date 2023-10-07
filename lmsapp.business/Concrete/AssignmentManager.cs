@@ -22,15 +22,15 @@ namespace lmsapp.business.Concrete
             return entity;
         }
 
-        public bool Update(Assignment entity)
+        public Task<Assignment> UpdateAsync(Assignment entity)
         {
             if (Validation(entity))
             {
-                _unitofwork.Assignments.Update(entity);
+                _unitofwork.Assignments.UpdateAsync(entity);
                 _unitofwork.Save();
-                return true;
+                return Task.FromResult(entity);
             }
-            return false;
+            return null;
         }
         public void Delete(Assignment entity)
         {
@@ -57,5 +57,6 @@ namespace lmsapp.business.Concrete
             }
             return isValid;
         }
+
     }
 }

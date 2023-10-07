@@ -21,11 +21,11 @@ namespace lmsapp.business.Concrete
             await _unitofwork.SaveAsync();
             return entity;
         }
-        public bool Update(Enrollment entity)
+        public Task<Enrollment> UpdateAsync(Enrollment entity)
         {
-            _unitofwork.Enrollments.Update(entity);
+            _unitofwork.Enrollments.UpdateAsync(entity);
             _unitofwork.Save();
-            return true;
+            return Task.FromResult(entity);
         }
         public void Delete(Enrollment entity)
         {

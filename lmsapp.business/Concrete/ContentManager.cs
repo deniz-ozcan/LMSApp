@@ -20,15 +20,16 @@ namespace lmsapp.business.Concrete
             return entity;
         }
 
-        public bool Update(Content entity)
-        {            
+        
+        public Task<Content> UpdateAsync(Content entity)
+        {
             if (Validation(entity))
             {
-                _unitofwork.Contents.Update(entity);
+                _unitofwork.Contents.UpdateAsync(entity);
                 _unitofwork.Save();
-                return true;
+                return Task.FromResult(entity);
             }
-            return false;
+            return null;
         }
         public void Delete(Content entity)
         {

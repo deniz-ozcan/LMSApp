@@ -23,10 +23,19 @@ namespace lmsapp.webui.Controllers
         {
             return View();
         }
-
-
         public async Task<IActionResult> Index(string q, int page = 1)
         {
+            var courses = await _courseService.GetCoursesAsync(q, page, 8);
+            var instructorCourses = new List<InstructorCourse>();
+            foreach (var course in courses)
+            {
+                var instructor = await _userManager.FindByIdAsync(course.InstructorId);
+                instructorCourses.Add(new InstructorCourse()
+                {
+                    Course = course,
+                    Instructor = instructor
+                });
+            }
             return View(new CourseViewModel()
             {
                 PageInfo = new PageInfo()
@@ -36,16 +45,22 @@ namespace lmsapp.webui.Controllers
                     ItemsPerPage = 8,
                     CurrentCategory = q
                 },
-                Courses = await _courseService.GetCoursesAsync(q, page, 8)
+                Courses = instructorCourses
             });
         }
         public async Task<IActionResult> Detail(int id)
         {
             Course course = await _courseService.GetCourseByIdAsync(id);
-            return course == null ? NotFound() : View(course);
+            var instructor = await _userManager.FindByIdAsync(course.InstructorId);
+            var instructorCourse = new InstructorCourse()
+            {
+                Course = course,
+                Instructor = instructor
+            };
+            return instructorCourse == null ? NotFound() : View(instructorCourse);
         }
         [HttpPost]
-        public IActionResult Enroll(int courseId)
+        public async Task<IActionResult> Enroll(int courseId)
         {
             if(!User.Identity.IsAuthenticated){
                 return RedirectToAction("Login", "Account");
@@ -55,7 +70,10 @@ namespace lmsapp.webui.Controllers
             {
                 if (!_enrollmentService.isEnrolled(courseId, userId))
                 {
-                    _enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = userId});
+                    await _enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = userId});
+                    Course crs = await _courseService.GetCourseByIdAsync(courseId);
+                    crs.EnrollmentCount++;
+                    await _courseService.UpdateAsync(crs);
                 }
                 return RedirectToAction("Enrollments", "Student");
             }
