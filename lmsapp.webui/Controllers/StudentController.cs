@@ -1,22 +1,37 @@
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using lmsapp.business.Abstract;
-using lmsapp.entity;
 using lmsapp.webui.Models;
+using Microsoft.AspNetCore.Identity;
+using lmsapp.webui.Identity;
 
 namespace lmsapp.webui.Controllers
 {
     public class StudentController: Controller
     {
         private readonly ICourseService _courseService;
-        public StudentController(ICourseService courseService)
+        private readonly UserManager<User> _userManager;
+        public StudentController(ICourseService courseService, UserManager<User> userManager)
         {
             _courseService = courseService;
+            _userManager = userManager;
         }
-        [HttpGet]
-        public IActionResult Enrollments()
-        {
-            return View();
+        public async Task<IActionResult> Enrollments(){
+            var userId = _userManager.GetUserId(User);
+            var courses = await _courseService.GetStudentCoursesByUserIdAsync(userId);
+            var instructorCourses = new List<InstructorCourse>();
+            foreach (var course in courses)
+            {
+                var instructor = await _userManager.FindByIdAsync(course.InstructorId);
+                instructorCourses.Add(new InstructorCourse()
+                {
+                    Course = course,
+                    Instructor = instructor
+                });
+            }
+            return View(new CourseViewModel()
+            {
+                Courses = instructorCourses
+            });
         }
     }
 }

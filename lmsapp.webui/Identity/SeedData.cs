@@ -63,6 +63,36 @@ namespace lmsapp.webui.Identity
                                     isUpdated = false
                                 });
                             }
+                            if (step == 1)
+                            {
+                                for (int j = 0; j < sectionTitles.Count(); j++)
+                                {
+                                    await sectionService.CreateAsync(new Section { Title = sectionTitles[j], CourseId = 1 });
+                                }
+                                var q = 0;
+                                for (int j = 1; j < contents.Count(); j++)
+                                {
+                                    var f2 = contents[j].Split(',');
+                                    if (sectionTitles.IndexOf(f2[0]) > q)
+                                    {
+                                        q = sectionTitles.IndexOf(f2[0]);
+                                    }
+                                    await contentService.CreateAsync(new Content { SectionId = q + 1, Title = f2[2], VideoUrl = f2[1], IsCompleted = false });
+                                }
+                                for (int i = 1; i < assignments.Count(); i++)
+                                {
+                                    var f3 = assignments[i].Split(',');
+                                    await assignmentService.CreateAsync(new Assignment
+                                    {
+                                        AssignmentID = i,
+                                        Title = f3[0],
+                                        Description = f3[1],
+                                        DueDate = DateTime.Parse(f3[2]),
+                                        CourseId = i,
+                                        IsSubmitted = false
+                                    });
+                                }
+                            }
                             step += courseCount;
                         }
                         if (role == "Student")
@@ -80,33 +110,6 @@ namespace lmsapp.webui.Identity
                     }
                     await userManager.AddToRoleAsync(user, "Student");
                 }
-            }
-            for (int j = 0; j < sectionTitles.Count(); j++)
-            {
-                await sectionService.CreateAsync(new Section { Title = sectionTitles[j], CourseID = 1 });
-            }
-            var q = 0;
-            for (int j = 1; j < contents.Count(); j++)
-            {
-                var f2 = contents[j].Split(',');
-                if (sectionTitles.IndexOf(f2[0]) > q)
-                {
-                    q = sectionTitles.IndexOf(f2[0]);
-                }
-                await contentService.CreateAsync(new Content { SectionID = q + 1, Title = f2[2], VideoUrl = f2[1], IsCompleted = false });
-            }
-            for (int i = 1; i < assignments.Count(); i++)
-            {
-                var f3 = assignments[i].Split(',');
-                await assignmentService.CreateAsync(new Assignment
-                {
-                    AssignmentID = i,
-                    Title = f3[0],
-                    Description = f3[1],
-                    DueDate = DateTime.Parse(f3[2]),
-                    CourseID = i,
-                    IsSubmitted = false
-                });
             }
         }
     }

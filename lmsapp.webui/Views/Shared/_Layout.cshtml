@@ -41,7 +41,7 @@
             if (User.IsInRole("Instructor"))
             {
               <li class="nav-item">
-                <a asp-controller="Instructor" asp-action="Index" class="nav-link">My Lectures</a>
+                <a asp-controller="Instructor" asp-action="Lectures" class="nav-link">My Lectures</a>
               </li>
             }
             if (User.IsInRole("Student"))

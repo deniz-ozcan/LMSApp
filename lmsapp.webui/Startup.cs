@@ -87,11 +87,7 @@ namespace lmsapp.webui
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Course}/{action=LandingPage}/{id?}");
-                endpoints.MapControllerRoute(name: "Course", pattern: "Course", defaults: new { controller = "Course", action = "Index" });
-                endpoints.MapControllerRoute(name: "CourseDetails", pattern: "{url}", defaults: new { controller = "Course", action = "Detail" });
-                endpoints.MapControllerRoute(name: "Collection", pattern: "Collection", defaults: new { controller = "Student", action = "Enrollments" });
-                endpoints.MapControllerRoute(name: "SearchCourses", pattern: "Search/Courses", defaults: new { controller = "Course", action = "Search" });
-                endpoints.MapControllerRoute(name: "AdminCourses", pattern: "Admin/Courses", defaults: new { controller = "Admin", action = "Courses" });
+                endpoints.MapControllerRoute(name: "SearchCourses", pattern: "Courses/Search", defaults: new { controller = "Course", action = "Search" });
                 endpoints.MapControllerRoute(name: "AdminPanel", pattern: "Admin/Panel", defaults: new { controller = "Admin", action = "AdminPanel" });
                 endpoints.MapControllerRoute(name: "AdminUserEdit", pattern: "Admin/User/{id?}", defaults: new { controller = "Admin", action = "UserUpdate" });
                 endpoints.MapControllerRoute(name: "AdminRoleEdit", pattern: "Admin/Role/{id?}", defaults: new { controller = "Admin", action = "RoleUpdate" });

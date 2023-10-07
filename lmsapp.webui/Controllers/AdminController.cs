@@ -72,12 +72,6 @@ namespace lmsapp.webui.Controllers
         public IActionResult UserList() => View(_userManager.Users);
         public IActionResult RoleList() => View(_roleManager.Roles);
         public async Task<IActionResult> AdminPanel(){
-            // return View(new AdminPanelModel()
-            // {
-            //     Users = _userManager.Users,
-            //     Roles =  _roleManager.Roles,
-            //     Courses = await _courseService.GetAllCoursesAsync()
-            // });
             var courses = await _courseService.GetAllAsync();
             var instructorCourses = new List<InstructorCourse>();
             foreach (var course in courses)

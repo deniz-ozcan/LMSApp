@@ -21,6 +21,10 @@ namespace lmsapp.webui.Controllers
         }
         public IActionResult LandingPage()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Course");
+            }
             return View();
         }
         public async Task<IActionResult> Index(string q, int page = 1)

@@ -1,4 +1,43 @@
 @model CourseViewModel
 @section title {
-    <title>Collection | LMSApp</title>
-}
+  <title>My Collection | LMSApp</title>
+} 
+
+<div class="card-group">
+  @if (Model.Courses.Count == 0)
+  {
+    <div class="text-center fs-5 alertdanger">
+      <h1 class="h3">The Course you are looking for was not found.</h1>
+    </div>
+  }
+  else
+  {
+    @foreach (var course in Model.Courses)
+    {
+      string cls = "";
+      if (course.Course.isUpdated == true)
+      {
+        cls = "bg-primary";
+      }
+      <a asp-controller="Course" asp-action="Detail" asp-route-id="@course.Course.Id" class="col-sm-3 mb-3" style="text-decoration:none;color:black;">
+        <div class="card mb-3 me-3 border-info @cls popupcard">
+          <img src="@course.Course.ImageUrl" alt="" class="card-img-top img-fluid" />
+          <div class="card-body" style="padding: 2rem 0rem;">
+            <p class="card-title info" style="color: #2d2f31;">@course.Course.Title</p>
+            <p class="card-title info" style="color: #6a6f73;">
+              @course.Instructor.FirstName @course.Instructor.LastName
+            </p>
+          </div>
+          <div class="list-group list-group-horizontal">
+            <li class="list-group-item p-0 pt-2 itemsing1" style="font-size:1rem;border:none;">
+              <ul class="list-group list-group-horizontal" style="list-style-type: none;font-weight: 400;color:#FFC000">
+                @for (int i = 0; i < (int)course.Course.Rate ; i++){<li>★</li>}
+                @for (int k = 0; k < 5 - (int)course.Course.Rate; k++){<li style="color:#D8D8D8;">★</li>}
+              </ul>
+            </li>
+          </div>
+        </div>
+      </a>
+    }
+  }
+</div>

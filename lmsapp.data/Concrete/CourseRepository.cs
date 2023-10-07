@@ -45,13 +45,14 @@ namespace lmsapp.data.Concrete
 
         public Task<List<Course>> GetInstructorCoursesByUserIdAsync(string userId)
         {
-            return LMSContext.Courses
-                .ToListAsync();
+            return LMSContext.Courses.Where(c => c.InstructorId == userId).ToListAsync();
         }
 
         public Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return LMSContext.Courses
+                .Include(c => c.Enrollments)
+                .Where(c => c.Enrollments.Any(e => e.UserId == userId)).ToListAsync();
         }
     }
 }

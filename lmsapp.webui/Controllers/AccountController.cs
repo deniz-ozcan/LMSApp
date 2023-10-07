@@ -54,9 +54,7 @@ namespace lmsapp.webui.Controllers
                 {
                     user.FirstName = model.FirstName;
                     user.LastName = model.LastName;
-                    user.UserName = model.UserName;
                     user.Email = model.Email;
-                    user.EmailConfirmed = model.EmailConfirmed;
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
