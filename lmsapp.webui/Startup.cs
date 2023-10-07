@@ -61,6 +61,7 @@ namespace lmsapp.webui
             services.AddScoped<ISectionService, SectionManager>();
             services.AddScoped<IContentService, ContentManager>();
             services.AddScoped<IAssignmentService, AssignmentManager>();
+            services.AddScoped<IEnrollmentService, EnrollmentManager>();
 
             services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
                 new SmtpEmailSender(
@@ -95,8 +96,6 @@ namespace lmsapp.webui
                 endpoints.MapControllerRoute(name: "AdminUserEdit", pattern: "Admin/User/{id?}", defaults: new { controller = "Admin", action = "UserUpdate" });
                 endpoints.MapControllerRoute(name: "AdminRoleEdit", pattern: "Admin/Role/{id?}", defaults: new { controller = "Admin", action = "RoleUpdate" });
                 endpoints.MapControllerRoute(name: "AdminRoleCreate", pattern: "Admin/Role/Create", defaults: new { controller = "Admin", action = "RoleCreate" });
-                endpoints.MapControllerRoute(name: "Cart", pattern: "Cart", defaults: new { controller = "Cart", action = "Index" });
-                endpoints.MapControllerRoute(name: "Checkout", pattern: "Checkout", defaults: new { controller = "Cart", action = "Checkout" });
             });
             SeedIdentity.Seed(userManager, roleManager, courseService, configuration).Wait();
         }

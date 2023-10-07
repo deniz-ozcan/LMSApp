@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
-using lmsapp.entity;
 using lmsapp.business.Abstract;
+using lmsapp.entity;
 
 namespace lmsapp.webui.Identity
 {

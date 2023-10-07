@@ -14,13 +14,6 @@ namespace lmsapp.data.Concrete
             get { return context as LMSContext; }
         }
 
-        public void Enroll(int CourseId, User user)
-        {
-            Course course =  LMSContext.Courses
-                            .Find(CourseId);
-            course.Students.Add(user);
-            LMSContext.SaveChanges();
-        }
 
         public Task<List<Course>> GetAllCoursesAsync()
         {

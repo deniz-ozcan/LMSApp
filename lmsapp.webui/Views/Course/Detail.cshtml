@@ -5,7 +5,7 @@
 <div class="container mt-3">
   <div class="row">
     <div class="card mb-3">
-      <div class="row g-0">
+      <div class="row g-0 mt-3">
         <div class="col-3">
           <img src="@Model.ImageUrl" alt="@Model.Title" class="card-img-top img-fluid" style="border: none;"/>
         </div>
@@ -28,15 +28,11 @@
                 </ul>
               </li>
           </div>
+
           <div class="input-group justify-content-center mb-3">
-            <form asp-controller="Cart" asp-action="AddToCart" method="POST" class="form-inline">
-              <input type="hidden" name="productId" value="@Model.Id">
-              <div class="input-group mb-3">
-                <input type="number" name="quantity" class="form-control" value="1" min="1" step="1" style="width: 100px;">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary btn-lg" type="submit" style="min-width:100px;background-color:#f27a1a">Enroll</button>
-                </div>
-              </div>
+            <form asp-controller="Course" asp-action="Enroll" method="POST" class="form-inline">
+              <input type="hidden" name="courseId" value= "@Model.Id">
+              <button class="btn btn-outline-primary btn-lg" type="submit" style="min-width:100px;background-color:#f27a1a">Enroll</button>
             </form>
           </div>
         </div>

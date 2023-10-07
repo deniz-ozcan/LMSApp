@@ -5,6 +5,8 @@ namespace lmsapp.data.Abstract
         IAssignmentRepository Assignments { get; }
         ICourseRepository Courses { get; }
         IContentRepository Contents { get; }
+        ISectionRepository Sections { get; }
+        IEnrollmentRepository Enrollments { get; }
         void Save();
         Task<int> SaveAsync();
     }

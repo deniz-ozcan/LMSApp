@@ -11,7 +11,7 @@ using lmsapp.data.Concrete;
 namespace lmsapp.data.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20231006184058_InitialCreate")]
+    [Migration("20231007094649_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -87,6 +87,9 @@ namespace lmsapp.data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("EnrollmentCount")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -119,6 +122,27 @@ namespace lmsapp.data.Migrations
                     b.ToTable("Courses");
                 });
 
+            modelBuilder.Entity("lmsapp.entity.Enrollment", b =>
+                {
+                    b.Property<int>("EnrollmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("StudentId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("EnrollmentId");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Enrollments");
+                });
+
             modelBuilder.Entity("lmsapp.entity.Section", b =>
                 {
                     b.Property<int>("SectionID")
@@ -148,9 +172,6 @@ namespace lmsapp.data.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT");
@@ -196,8 +217,6 @@ namespace lmsapp.data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
                     b.ToTable("User");
                 });
 
@@ -232,6 +251,23 @@ namespace lmsapp.data.Migrations
                     b.Navigation("Instructor");
                 });
 
+            modelBuilder.Entity("lmsapp.entity.Enrollment", b =>
+                {
+                    b.HasOne("lmsapp.entity.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("lmsapp.entity.User", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("lmsapp.entity.Section", b =>
                 {
                     b.HasOne("lmsapp.entity.Course", "Course")
@@ -243,20 +279,11 @@ namespace lmsapp.data.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("lmsapp.entity.User", b =>
-                {
-                    b.HasOne("lmsapp.entity.Course", null)
-                        .WithMany("Students")
-                        .HasForeignKey("CourseId");
-                });
-
             modelBuilder.Entity("lmsapp.entity.Course", b =>
                 {
                     b.Navigation("Assignments");
 
                     b.Navigation("Sections");
-
-                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("lmsapp.entity.Section", b =>

@@ -16,6 +16,8 @@ namespace lmsapp.entity
         [Required]
         public string Category { get; set; }
         [Required]
+        public int EnrollmentCount { get; set; }
+        [Required]
         public float Rate { get; set; }
         [Required]
         public bool isUpdated { get; set; }
@@ -27,6 +29,5 @@ namespace lmsapp.entity
         public string Level { get; set; }
         public List<Assignment> Assignments { get; set; }
         public List<Section> Sections { get; set; }
-        public List<User> Students { get; set; }
     }
 }

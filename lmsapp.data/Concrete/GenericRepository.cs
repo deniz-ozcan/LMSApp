@@ -25,9 +25,10 @@ namespace lmsapp.data.Concrete
             context.Set<TEntity>().Remove(entity);
         }
 
-        public virtual void Update(TEntity entity)
+        public bool Update(TEntity entity)
         {
             context.Entry(entity).State = EntityState.Modified;
+            return true;
         }
 
     }

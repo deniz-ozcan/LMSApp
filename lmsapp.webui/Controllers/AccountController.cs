@@ -81,7 +81,7 @@ namespace lmsapp.webui.Controllers
                     userId = user.Id,
                     token = code
                 });
-                await _emailSender.SendEmailAsync(model.Email, "Hesabınızı onaylayınız.", $"Lütfen email hesabınızı onaylamak için linke <a href='https://localhost:7037{url}'>tıklayınız.</a>");
+                await _emailSender.SendEmailAsync(model.Email, "Hesabınızı onaylayınız.", $"Lütfen email hesabınızı onaylamak için linke <a href='http://localhost:5278{url}'>tıklayınız.</a>");
                 return RedirectToAction("Login", "Account");
             }
             ModelState.AddModelError("", "Bilinmeyen hata oldu lütfen tekrar deneyiniz.");
@@ -90,24 +90,12 @@ namespace lmsapp.webui.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            TempData.Put("message", new AlertMessage()
-            {
-                Title = "Oturum Kapatıldı.",
-                Message = "Hesabınız güvenli bir şekilde kapatıldı.",
-                AlertType = "warning"
-            });
             return Redirect("~/");
         }
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
             if (userId == null || token == null)
             {
-                TempData.Put("message", new AlertMessage()
-                {
-                    Title = "Geçersiz token.",
-                    Message = "Geçersiz Token",
-                    AlertType = "danger"
-                });
                 return View();
             }
             User user = await _userManager.FindByIdAsync(userId);
@@ -116,21 +104,9 @@ namespace lmsapp.webui.Controllers
                 IdentityResult result = await _userManager.ConfirmEmailAsync(user, token);
                 if (result.Succeeded)
                 {
-                    TempData.Put("message", new AlertMessage()
-                    {
-                        Title = "Hesabınız onaylandı.",
-                        Message = "Hesabınız onaylandı.",
-                        AlertType = "success"
-                    });
                     return View();
                 }
             }
-            TempData.Put("message", new AlertMessage()
-            {
-                Title = "Hesabınızı onaylanmadı.",
-                Message = "Hesabınızı onaylanmadı.",
-                AlertType = "warning"
-            });
             return View();
         }
         public IActionResult ForgotPassword()
@@ -155,14 +131,14 @@ namespace lmsapp.webui.Controllers
                 userId = user.Id,
                 token = code
             });
-            await _emailSender.SendEmailAsync(Email, "Reset Password", $"Parolanızı yenilemek için linke <a href='https://localhost:5157{url}'>tıklayınız.</a>");
+            await _emailSender.SendEmailAsync(Email, "Reset Password", $"Parolanızı yenilemek için linke <a href='http://localhost:5278{url}'>tıklayınız.</a>");
             return View();
         }
         public IActionResult ResetPassword(string userId, string token)
         {
             if (userId == null || token == null)
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Course", "Index");
             }
             _ = new ResetPasswordModel { Token = token };
             return View();
@@ -177,7 +153,7 @@ namespace lmsapp.webui.Controllers
             User user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Course", "Index");
             }
             IdentityResult result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             return result.Succeeded ? RedirectToAction("Login", "Account") : View(model);

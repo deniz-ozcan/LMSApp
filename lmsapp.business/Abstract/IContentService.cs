@@ -2,7 +2,7 @@ using lmsapp.entity;
 
 namespace lmsapp.business.Abstract
 {
-    public interface IContentService : IService<Content>
+    public interface IContentService : IService<Content>, IValidator<Content>
     {
         
     }

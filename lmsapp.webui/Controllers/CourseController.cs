@@ -10,10 +10,12 @@ namespace lmsapp.webui.Controllers
     public class CourseController : Controller
     {
         private readonly ICourseService _courseService;
+        private readonly IEnrollmentService _enrollmentService;
         private readonly UserManager<User> _userManager;
-        public CourseController(ICourseService courseService, UserManager<User> userManager)
+        public CourseController(ICourseService courseService, IEnrollmentService enrollmentService, UserManager<User> userManager)
         {
             _courseService = courseService;
+            _enrollmentService = enrollmentService;
             _userManager = userManager;
         }
         public async Task<IActionResult> Index(string q, int page = 1)
@@ -34,6 +36,17 @@ namespace lmsapp.webui.Controllers
         {
             Course course = await _courseService.GetCourseByIdAsync(id);
             return course == null ? NotFound() : View(course);
+        }
+        [HttpPost]
+        public IActionResult Enroll(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            if (userId == null || !User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            _enrollmentService.Enroll(id, userId);
+            return RedirectToAction("Detail", new { id });
         }
     }
 }
