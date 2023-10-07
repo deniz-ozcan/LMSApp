@@ -107,7 +107,7 @@ namespace lmsapp.webui.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
             if (result.Succeeded)
             {
-                return Redirect(model.ReturnUrl ?? "~/");
+                return RedirectToAction("Index", "Course");
             }
             ModelState.AddModelError("", "Girilen kullanıcı adı veya parola yanlış");
             return View(model);

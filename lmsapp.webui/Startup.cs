@@ -86,7 +86,7 @@ namespace lmsapp.webui
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Course}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Course}/{action=LandingPage}/{id?}");
                 endpoints.MapControllerRoute(name: "Course", pattern: "Course", defaults: new { controller = "Course", action = "Index" });
                 endpoints.MapControllerRoute(name: "CourseDetails", pattern: "{url}", defaults: new { controller = "Course", action = "Detail" });
                 endpoints.MapControllerRoute(name: "Collection", pattern: "Collection", defaults: new { controller = "Student", action = "Enrollments" });

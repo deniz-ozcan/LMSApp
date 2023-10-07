@@ -10,5 +10,15 @@ namespace lmsapp.data.Concrete
         {
             get { return context as LMSContext; }
         }
+
+        public bool isEnrolled(int courseId, string userId)
+        {
+            var enrollment = LMSContext.Enrollments.FirstOrDefault(e => e.CourseId == courseId && e.UserId == userId);
+            if (enrollment != null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

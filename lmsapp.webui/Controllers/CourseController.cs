@@ -19,6 +19,12 @@ namespace lmsapp.webui.Controllers
             _enrollmentService = enrollmentService;
             _userManager = userManager;
         }
+        public IActionResult LandingPage()
+        {
+            return View();
+        }
+
+
         public async Task<IActionResult> Index(string q, int page = 1)
         {
             return View(new CourseViewModel()
@@ -41,14 +47,19 @@ namespace lmsapp.webui.Controllers
         [HttpPost]
         public IActionResult Enroll(int courseId)
         {
-
-            var userId = _userManager.GetUserId(User);
-            if (userId == null || !User.Identity.IsAuthenticated)
-            {
+            if(!User.Identity.IsAuthenticated){
                 return RedirectToAction("Login", "Account");
             }
-            _enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = userId});
-            return RedirectToAction("Enrollments", "Student");
+            var userId = _userManager.GetUserId(User);
+            if (userId != null)
+            {
+                if (!_enrollmentService.isEnrolled(courseId, userId))
+                {
+                    _enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = userId});
+                }
+                return RedirectToAction("Enrollments", "Student");
+            }
+            return RedirectToAction("Login", "Account");
         }
     }
 }

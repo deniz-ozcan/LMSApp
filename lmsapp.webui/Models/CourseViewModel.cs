@@ -8,27 +8,9 @@ namespace lmsapp.webui.Models
         public int ItemsPerPage { get; set; }
         public int CurrentPage { get; set; }
         public string CurrentCategory { get; set; }
-
-        public int TotalPages()
-        {
-            return (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage);
-        }
-        public int HasPrevious()
-        {
-            if (CurrentPage > 1)
-            {
-                return 1;
-            }
-            return 0;
-        }
-        public int HasNext()
-        {
-            if (CurrentPage < TotalPages())
-            {
-                return 1;
-            }
-            return 0;
-        }
+        public int TotalPages() => (int)Math.Ceiling((decimal)TotalItems / ItemsPerPage);
+        public int HasPrevious() => CurrentPage > 1 ? 1 : 0;
+        public int HasNext() => CurrentPage < TotalPages() ? 1 : 0;
     }
 
     public class CourseViewModel

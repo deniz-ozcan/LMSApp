@@ -32,5 +32,10 @@ namespace lmsapp.business.Concrete
             _unitofwork.Enrollments.Delete(entity);
             _unitofwork.Save();
         }
+
+        public bool isEnrolled(int courseId, string userId)
+        {
+            return _unitofwork.Enrollments.isEnrolled(courseId, userId);
+        }
     }
 }

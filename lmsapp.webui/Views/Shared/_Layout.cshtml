@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="~/css/bootstrap.min.css">
   <link rel="stylesheet" href="~/css/main.css">
-  <link rel="icon" href="~/img/netcore.svg" type="image/x-icon">
+  <link rel="icon" href="~/img/brand.svg" type="image/x-icon">
   @RenderSection("title", required: true)
   <style>
     input[type=number] {
@@ -20,14 +20,21 @@
 <body>
   <nav class="navbar sticky-top navbar-dark bg-dark navbar-expand-md">
     <div class="container">
-      <a class="navbar-brand" href="/" style="color: #F50057;">LMSApp</a>
+      @if (!User.Identity.IsAuthenticated)
+      {
+        <a class="navbar-brand" href="/" style="color: #F50057;">LMSApp</a>
+      }
+      else
+      {
+        <a class="navbar-brand" asp-controller="Course" asp-action="Index" style="color: #F50057;">LMSApp</a>
+      }
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a href="~/" class="nav-link">Courses</a>
+            <a asp-controller="Course" asp-action="Index" class="nav-link">Courses</a>
           </li>
           @if (User.Identity.IsAuthenticated)
           {
@@ -40,7 +47,7 @@
             if (User.IsInRole("Student"))
             {
               <li class="nav-item">
-              <a asp-controller="Student" asp-action="Enrollments" class="nav-link">My Learning</a>
+                <a asp-controller="Student" asp-action="Enrollments" class="nav-link">My Learning</a>
               </li>
             }
             if (User.IsInRole("Admin"))
@@ -85,7 +92,7 @@
   {
     <partial name="_ResultMessage" model="@(TempData.Get<AlertMessage>("message"))" />
   }
-  <footer id="footer" class="py-5 bg-dark text-white text-center mt-3 fs-1">LMSApp</footer>
+  <footer id="footer" class="py-5 bg-dark text-center mt-3 fs-1" style="color: #F50057;">LMSApp</footer>
   @RenderSection("JavaScript", false)
   <script src="~/js/main.js"></script>
   <script src="~/js/bootstrap.js"></script>
