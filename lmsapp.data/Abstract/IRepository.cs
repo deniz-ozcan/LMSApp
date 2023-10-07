@@ -4,6 +4,7 @@ namespace lmsapp.data.Abstract
     {
         Task CreateAsync(T entity);
         Task UpdateAsync(T entity);
+        Task<List<T>> GetAllAsync();
         void Delete(T entity);
     }
 }

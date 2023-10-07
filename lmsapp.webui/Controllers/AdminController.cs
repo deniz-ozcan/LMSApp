@@ -78,7 +78,7 @@ namespace lmsapp.webui.Controllers
             //     Roles =  _roleManager.Roles,
             //     Courses = await _courseService.GetAllCoursesAsync()
             // });
-            var courses = await _courseService.GetAllCoursesAsync();
+            var courses = await _courseService.GetAllAsync();
             var instructorCourses = new List<InstructorCourse>();
             foreach (var course in courses)
             {

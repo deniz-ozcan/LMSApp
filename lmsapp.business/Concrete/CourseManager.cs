@@ -7,20 +7,16 @@ namespace lmsapp.business.Concrete
     public class CourseManager : ICourseService
     {
         private readonly IUnitOfWork _unitofwork;
+        public string ErrorMessage { get; set; }
         public CourseManager(IUnitOfWork unitofwork)
         {
             _unitofwork = unitofwork;
         }
-
-        public string ErrorMessage { get; set; }
-        public async Task<Course> CreateAsync(Course entity)
+        public async Task CreateAsync(Course entity)
         {
             await _unitofwork.Courses.CreateAsync(entity);
             await _unitofwork.SaveAsync();
-            return entity;
         }
-
-
         public Task<Course> UpdateAsync(Course entity)
         {
             if (Validation(entity))
@@ -36,27 +32,22 @@ namespace lmsapp.business.Concrete
             _unitofwork.Courses.Delete(entity);
             _unitofwork.Save();
         }
-
         public Task<Course> GetCourseByIdAsync(int id)
         {
             return _unitofwork.Courses.GetCourseByIdAsync(id);
         }
-
         public Task<List<Course>> GetCoursesAsync(string q, int page, int pageSize)
         {
             return _unitofwork.Courses.GetCoursesAsync(q, page, pageSize);
         }
-
         public Task<int> GetCoursesCountAsync(string q)
         {
             return _unitofwork.Courses.GetCoursesCountAsync(q);
         }
-
         public Task<List<Course>> GetInstructorCoursesByUserIdAsync(string userId)
         {
             return _unitofwork.Courses.GetInstructorCoursesByUserIdAsync(userId);
         }
-
         public Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId)
         {
             return _unitofwork.Courses.GetStudentCoursesByUserIdAsync(userId);
@@ -76,10 +67,9 @@ namespace lmsapp.business.Concrete
             }
             return isValid;
         }
-
-        public Task<List<Course>> GetAllCoursesAsync()
+        public Task<List<Course>> GetAllAsync()
         {
-            return _unitofwork.Courses.GetAllCoursesAsync();
+            return _unitofwork.Courses.GetAllAsync();
         }
     }
 }

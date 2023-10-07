@@ -9,17 +9,15 @@ namespace lmsapp.business.Concrete
     public class EnrollmentManager : IEnrollmentService
     {
         private readonly IUnitOfWork _unitofwork;
+        public string ErrorMessage { get; set; }
         public EnrollmentManager(IUnitOfWork unitofwork)
         {
             _unitofwork = unitofwork;
         }
-        public string ErrorMessage { get; set; }
-
-        public async Task<Enrollment> CreateAsync(Enrollment entity)
+        public async Task CreateAsync(Enrollment entity)
         {
             await _unitofwork.Enrollments.CreateAsync(entity);
             await _unitofwork.SaveAsync();
-            return entity;
         }
         public Task<Enrollment> UpdateAsync(Enrollment entity)
         {
@@ -32,10 +30,13 @@ namespace lmsapp.business.Concrete
             _unitofwork.Enrollments.Delete(entity);
             _unitofwork.Save();
         }
-
         public bool isEnrolled(int courseId, string userId)
         {
             return _unitofwork.Enrollments.isEnrolled(courseId, userId);
+        }
+        public Task<List<Enrollment>> GetAllAsync()
+        {
+            return _unitofwork.Enrollments.GetAllAsync();
         }
     }
 }

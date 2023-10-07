@@ -1,5 +1,3 @@
-
-
 using lmsapp.business.Abstract;
 using lmsapp.data.Abstract;
 using lmsapp.entity;
@@ -9,19 +7,16 @@ namespace lmsapp.business.Concrete
     public class AssignmentManager : IAssignmentService
     {
         private readonly IUnitOfWork _unitofwork;
+        public string ErrorMessage { get; set; }
         public AssignmentManager(IUnitOfWork unitofwork)
         {
             _unitofwork = unitofwork;
         }
-        public string ErrorMessage { get; set; }
-
-        public async Task<Assignment> CreateAsync(Assignment entity)
+        public async Task CreateAsync(Assignment entity)
         {
             await _unitofwork.Assignments.CreateAsync(entity);
             await _unitofwork.SaveAsync();
-            return entity;
         }
-
         public Task<Assignment> UpdateAsync(Assignment entity)
         {
             if (Validation(entity))
@@ -38,10 +33,6 @@ namespace lmsapp.business.Concrete
             _unitofwork.Assignments.Delete(entity);
             _unitofwork.Save();
         }
-        public async Task<List<Assignment>> GetAssignmentsByUserIdAsync(string userId)
-        {
-            return await _unitofwork.Assignments.GetAssignmentsByUserIdAsync(userId);
-        }
         public bool Validation(Assignment entity)
         {
             var isValid = true;
@@ -57,6 +48,13 @@ namespace lmsapp.business.Concrete
             }
             return isValid;
         }
-
+        public Task<List<Assignment>> GetAllAsync()
+        {
+            return _unitofwork.Assignments.GetAllAsync();
+        }
+        public async Task<List<Assignment>> GetAssignmentsByUserIdAsync(string userId)
+        {
+            return await _unitofwork.Assignments.GetAssignmentsByUserIdAsync(userId);
+        }
     }
 }

@@ -7,20 +7,16 @@ namespace lmsapp.business.Concrete
     public class ContentManager : IContentService
     {
         private readonly IUnitOfWork _unitofwork;
+        public string ErrorMessage { get; set; }
         public ContentManager(IUnitOfWork unitofwork)
         {
             _unitofwork = unitofwork;
         }
-
-        public string ErrorMessage { get; set; }
-        public async Task<Content> CreateAsync(Content entity)
+        public async Task CreateAsync(Content entity)
         {
             await _unitofwork.Contents.CreateAsync(entity);
             await _unitofwork.SaveAsync();
-            return entity;
         }
-
-        
         public Task<Content> UpdateAsync(Content entity)
         {
             if (Validation(entity))
@@ -50,6 +46,10 @@ namespace lmsapp.business.Concrete
                 isValid = false;
             }
             return isValid;
+        }
+        public Task<List<Content>> GetAllAsync()
+        {
+            return _unitofwork.Contents.GetAllAsync();
         }
     }
 }
