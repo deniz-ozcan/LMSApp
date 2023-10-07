@@ -20,12 +20,69 @@ namespace lmsapp.webui.Controllers
             _signInManager = signInManager;
             _emailSender = emailSender;
         }
-        public IActionResult Login(string ReturnUrl = null)
+        public IActionResult Login(string ReturnUrl = null) => View(new LoginModel() { ReturnUrl = ReturnUrl });
+        public IActionResult Register() => View();
+        public IActionResult ForgotPassword() => View();
+        public IActionResult AccessDenied() => View();
+
+        public async Task<IActionResult> Profile()
         {
-            return View(new LoginModel()
+            var userId = _userManager.GetUserId(User);
+            var user = await _userManager.FindByIdAsync(userId);
+            var selectedRoles = await _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            ViewBag.Roles = roles;
+            return View(new UserDetailsModel()
             {
-                ReturnUrl = ReturnUrl
+                UserId = user.Id,
+                UserName = user.UserName,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                SelectedRoles = selectedRoles
             });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProfileUpdate(UserDetailsModel model, string[] selectedRoles)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId);
+                if (user != null)
+                {
+                    user.FirstName = model.FirstName;
+                    user.LastName = model.LastName;
+                    user.UserName = model.UserName;
+                    user.Email = model.Email;
+                    user.EmailConfirmed = model.EmailConfirmed;
+                    var result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        var userRoles = await _userManager.GetRolesAsync(user);
+                        selectedRoles = selectedRoles ?? new string[] { };
+                        await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles).ToArray());
+                        if (selectedRoles.Contains("Student"))
+                        {
+                            foreach (var item in userRoles)
+                            {
+                                if (item != "Student")
+                                {
+                                    await _userManager.RemoveFromRoleAsync(user, item);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles).ToArray());
+                        }
+                        return RedirectToAction("Index", "Course");
+                    }
+                }
+                return RedirectToAction("Profile");
+            }
+            return View(model);
         }
 
         [HttpPost]
@@ -55,8 +112,6 @@ namespace lmsapp.webui.Controllers
             ModelState.AddModelError("", "Girilen kullanıcı adı veya parola yanlış");
             return View(model);
         }
-        public IActionResult Register() => View();
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
@@ -73,7 +128,7 @@ namespace lmsapp.webui.Controllers
                 Email = model.Email
             };
             var result = await _userManager.CreateAsync(user, model.Password);
-            await _userManager.AddToRoleAsync(user,  "Student");
+            await _userManager.AddToRoleAsync(user, "Student");
 
             if (result.Succeeded)
             {
@@ -109,10 +164,6 @@ namespace lmsapp.webui.Controllers
                     return View();
                 }
             }
-            return View();
-        }
-        public IActionResult ForgotPassword()
-        {
             return View();
         }
         [HttpPost]
@@ -159,10 +210,6 @@ namespace lmsapp.webui.Controllers
             }
             IdentityResult result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             return result.Succeeded ? RedirectToAction("Login", "Account") : View(model);
-        }
-        public IActionResult AccessDenied()
-        {
-            return View();
         }
     }
 }

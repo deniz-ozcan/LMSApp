@@ -1,0 +1,80 @@
+@model UserDetailsModel
+@section title {
+  <title>Profile | LMSApp</title>
+}
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="card col-8 p-0">
+      <div class="card-header bg-dark" style="color:#ff8800;font-size:24px;">
+        <div class="card-title text-center pt-3">Profile</div>
+      </div>
+      <div class="card-body">
+        <form asp-controller="Account" asp-action="ProfileUpdate" method="POST">
+          <div class="form-group">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="row mb-3">
+              <div class="col-9">
+                <input type="hidden" name="UserId" value="@Model.UserId">
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text bg-secondary" style="color:#fff; id=" inputGroup-sizing-sm">First Name</span>
+                  <input type="text" asp-for="FirstName" class="form-control" aria-describedby="inputGroup-sizing-sm">
+                  <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Last Name</span>
+                  <input type="text" asp-for="LastName" class="form-control" aria-describedby="inputGroup-sizing-sm">
+                  <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Username</span>
+                  <input type="text" asp-for="UserName" class="form-control" aria-describedby="inputGroup-sizing-sm" readonly>
+                  <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                  <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">E-Mail</span>
+                  <input type="text" asp-for="Email" class="form-control" aria-describedby="inputGroup-sizing-sm">
+                  <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+              </div>
+              <div class="col-3">
+                @foreach (var rolename in ViewBag.Roles)
+                {
+                    <div class="input-group input-group-sm mb-3">
+                      <div class="input-group-text">
+                        @if (rolename == "Student")
+                        {
+                          <input class="form-check-input mt-0" type="checkbox" name="selectedRoles" onclick="return false;" value="@rolename"  checked>
+                        }else{
+                          <input class="form-check-input mt-0" type="checkbox" name="selectedRoles" value="@rolename" id="@rolename" @(Model.SelectedRoles.Any(i => i == rolename) ? "checked" : "")>
+                        }
+                      </div>
+                      <label class="form-control" for="@rolename" style="border-left: 0px;">@rolename</label>
+                    </div>
+                }
+                @if (!ViewBag.Roles.Contains("Instructor"))
+                {
+                  <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-text" style="background-color: #2cc270;">
+                      <input class="form-check-input mt-0" type="checkbox" name="selectedRoles" value="Instructor" aria-label="Checkbox for following text input" id="Instructor">
+                    </div>
+                    <label class="form-control" for="role"  style="color:#123412;background-color: #25c96f;border-left: 0px;">Be Instructor</label>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <button type="submit" class="btn btn-outline-info" style="max-width: 160px;color:#08f;">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section JavaScript
+{
+  <script src="~/js/jquery.validate.js"></script>
+  <script src="~/js/jquery.validate.unobtrusive.js"></script>
+}

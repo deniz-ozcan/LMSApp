@@ -1,6 +1,6 @@
 @model UserDetailsModel
 @section title {
-  <title>Edit User | ScrapApp</title>
+  <title>Edit User | LMSApp</title>
 }
 
 <div class="container mt-3">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="input-group input-group-sm mb-3">
                   <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Username</span>
-                  @if (Model.UserName.Equals("admin"))
+                  @if (Model.UserName.Equals("Admin"))
                   {
                     <input type="text" asp-for="UserName" class="form-control" aria-describedby="inputGroup-sizing-sm" readonly>
                   }

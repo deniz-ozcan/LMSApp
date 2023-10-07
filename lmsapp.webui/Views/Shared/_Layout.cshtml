@@ -61,7 +61,7 @@
           @if (User.Identity.IsAuthenticated)
           {
             <li class="nav-item">
-              <a class="nav-link"> @User.Identity.Name.ToUpper() </a>
+              <a asp-controller="Account" asp-action="Profile" class="nav-link">@User.Identity.Name.ToUpper() </a>
             </li>
             <li class="nav-item">
               <a asp-controller="Account" asp-action="Logout" class="nav-link">Logout</a>
