@@ -77,14 +77,14 @@ namespace lmsapp.webui.Identity
                                     {
                                         q = sectionTitles.IndexOf(f2[0]);
                                     }
-                                    await contentService.CreateAsync(new Content { SectionId = q + 1, Title = f2[2], VideoUrl = f2[1], IsCompleted = false });
+                                    await contentService.CreateAsync(new Content { SectionId = q + 1, Title = f2[2], VideoUrl = f2[1] });
                                 }
                                 for (int i = 1; i < assignments.Count(); i++)
                                 {
                                     var f3 = assignments[i].Split(',');
                                     await assignmentService.CreateAsync(new Assignment
                                     {
-                                        AssignmentID = i,
+                                        AssignmentId = i,
                                         Title = f3[0],
                                         Description = f3[1],
                                         DueDate = DateTime.Parse(f3[2]),

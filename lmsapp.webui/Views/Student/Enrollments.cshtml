@@ -1,43 +1,54 @@
 @model CourseViewModel
 @section title {
   <title>My Collection | LMSApp</title>
-} 
-
-<div class="card-group">
-  @if (Model.Courses.Count == 0)
-  {
-    <div class="text-center fs-5 alertdanger">
-      <h1 class="h3">The Course you are looking for was not found.</h1>
-    </div>
-  }
-  else
-  {
-    @foreach (var course in Model.Courses)
+}
+@section css_files {
+  <style>
+    .fontapp {
+      font-family: SuisseWorks, Georgia, Times, 'Times New Roman', serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'
+    }
+  </style>
+}
+<div class="row" style="background-color: #2d2f31;padding-top:4.8rem;">
+  <div class="mt-3 mb-3" style="margin-left:220px;color: #fff;">
+    <h1 class="h3 fontapp" style="font-size:3rem;">My Collection</h1>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row mt-3" style="padding-left: 200px;padding-right: 200px;">
+    @if (Model.Courses.Count == 0)
     {
-      string cls = "";
-      if (course.Course.isUpdated == true)
+      <div class="text-center fs-5 alertdanger">
+        <h1 class="h3">You don't have any courses yet!</h1>
+      </div>
+    }
+    else
+    {
+      @foreach (var course in Model.Courses)
       {
-        cls = "bg-primary";
-      }
-      <a asp-controller="Course" asp-action="Detail" asp-route-id="@course.Course.Id" class="col-sm-3 mb-3" style="text-decoration:none;color:black;">
-        <div class="card mb-3 me-3 border-info @cls popupcard">
-          <img src="@course.Course.ImageUrl" alt="" class="card-img-top img-fluid" />
-          <div class="card-body" style="padding: 2rem 0rem;">
-            <p class="card-title info" style="color: #2d2f31;">@course.Course.Title</p>
-            <p class="card-title info" style="color: #6a6f73;">
-              @course.Instructor.FirstName @course.Instructor.LastName
-            </p>
-          </div>
-          <div class="list-group list-group-horizontal">
-            <li class="list-group-item p-0 pt-2 itemsing1" style="font-size:1rem;border:none;">
-              <ul class="list-group list-group-horizontal" style="list-style-type: none;font-weight: 400;color:#FFC000">
-                @for (int i = 0; i < (int)course.Course.Rate ; i++){<li>★</li>}
+        string cls = "";
+        if (course.Course.isUpdated == true)
+        {
+          cls = "bg-primary";
+        }
+        <a asp-controller="Student" asp-action="Detail" asp-route-id="@course.Course.Id" class="col-3 mb-3" style="text-decoration:none;color:black;">
+          <div class="card border-info @cls" style="height: 300px;">
+            <img src="@course.Course.ImageUrl" alt="" class="card-img-top img-fluid" />
+            <div class="card-body" style="padding: 5px 5px;">
+              <p class="card-title" style="color: #2d2f31;">@course.Course.Title</p>
+              <p class="card-title" style="color: #6a6f73;">
+                @course.Instructor.FirstName @course.Instructor.LastName
+              </p>
+            </div>
+            <div class="card-footer" style="border: none;background-color:#fff;">
+              <ul class="list-group list-group-horizontal" style="border:none;list-style-type: none;color:#FFC000">
+                @for (int i = 0; i < (int)course.Course.Rate; i++){<li>★</li>}
                 @for (int k = 0; k < 5 - (int)course.Course.Rate; k++){<li style="color:#D8D8D8;">★</li>}
               </ul>
-            </li>
+            </div>
           </div>
-        </div>
-      </a>
+        </a>
+      }
     }
-  }
+  </div>
 </div>

@@ -7,22 +7,6 @@ body {
 .btnhover:hover {
   background-color: #00000010 !important;
 }
-.accordion-item {
-  background-color: #fff;
-  border: 0px solid #00000020;
-}
-.accordion-button:not(.collapsed) {
-  color: #ff8800;
-  background-color: #fff;
-  box-shadow: none;
-}
-.accordion-button:focus {
-  z-index: 3;
-  background-color: #fff;
-  border-color: #fff;
-  outline: 0;
-  box-shadow: none;
-}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -124,6 +108,23 @@ footer {
 .input-group-text {
   background-color: #ffffff;
   border-left: 0 px #000;
+}
+
+.accordion-item {
+  background-color: #fff;
+  border: 0px solid #00000020;
+}
+.accordion-button:not(.collapsed) {
+  color: #ff8800;
+  background-color: #fff;
+  box-shadow: none;
+}
+.accordion-button:focus {
+  z-index: 3;
+  background-color: #fff;
+  border-color: #fff;
+  outline: 0;
+  box-shadow: none;
 }
 .accordion-container {
   height: 600px; /* İstenilen yüksekliği burada belirtin */

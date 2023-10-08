@@ -87,7 +87,6 @@ namespace lmsapp.webui.Controllers
                     Title = model.Title,
                     SectionId = model.SectionId,
                     VideoUrl = model.VideoUrl,
-                    IsCompleted = false
                 });
                 return RedirectToAction("Lectures","Instructor");
             }

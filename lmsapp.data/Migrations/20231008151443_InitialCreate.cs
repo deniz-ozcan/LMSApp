@@ -37,22 +37,23 @@ namespace lmsapp.data.Migrations
                 name: "Assignments",
                 columns: table => new
                 {
-                    AssignmentID = table.Column<int>(type: "INTEGER", nullable: false)
+                    AssignmentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     DueDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CourseId = table.Column<int>(type: "INTEGER", nullable: true),
+                    CourseId = table.Column<int>(type: "INTEGER", nullable: false),
                     IsSubmitted = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Assignments", x => x.AssignmentID);
+                    table.PrimaryKey("PK_Assignments", x => x.AssignmentId);
                     table.ForeignKey(
                         name: "FK_Assignments_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -79,17 +80,17 @@ namespace lmsapp.data.Migrations
                 name: "Sections",
                 columns: table => new
                 {
-                    SectionID = table.Column<int>(type: "INTEGER", nullable: false)
+                    SectionId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
-                    CourseID = table.Column<int>(type: "INTEGER", nullable: false)
+                    CourseId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sections", x => x.SectionID);
+                    table.PrimaryKey("PK_Sections", x => x.SectionId);
                     table.ForeignKey(
-                        name: "FK_Sections_Courses_CourseID",
-                        column: x => x.CourseID,
+                        name: "FK_Sections_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -99,21 +100,20 @@ namespace lmsapp.data.Migrations
                 name: "Contents",
                 columns: table => new
                 {
-                    ContentID = table.Column<int>(type: "INTEGER", nullable: false)
+                    ContentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    SectionID = table.Column<int>(type: "INTEGER", nullable: false),
+                    SectionId = table.Column<int>(type: "INTEGER", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
-                    VideoUrl = table.Column<string>(type: "TEXT", nullable: true),
-                    IsCompleted = table.Column<bool>(type: "INTEGER", nullable: false)
+                    VideoUrl = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contents", x => x.ContentID);
+                    table.PrimaryKey("PK_Contents", x => x.ContentId);
                     table.ForeignKey(
-                        name: "FK_Contents_Sections_SectionID",
-                        column: x => x.SectionID,
+                        name: "FK_Contents_Sections_SectionId",
+                        column: x => x.SectionId,
                         principalTable: "Sections",
-                        principalColumn: "SectionID",
+                        principalColumn: "SectionId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -123,9 +123,9 @@ namespace lmsapp.data.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contents_SectionID",
+                name: "IX_Contents_SectionId",
                 table: "Contents",
-                column: "SectionID");
+                column: "SectionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_CourseId",
@@ -133,9 +133,9 @@ namespace lmsapp.data.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sections_CourseID",
+                name: "IX_Sections_CourseId",
                 table: "Sections",
-                column: "CourseID");
+                column: "CourseId");
         }
 
         /// <inheritdoc />

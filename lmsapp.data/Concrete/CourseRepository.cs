@@ -54,5 +54,15 @@ namespace lmsapp.data.Concrete
                 .Include(c => c.Enrollments)
                 .Where(c => c.Enrollments.Any(e => e.UserId == userId)).ToListAsync();
         }
+        public Task<Course> GetStudentCourseContentAsync(string userId, int courseId)
+        {
+            return LMSContext.Courses
+                .Include(e => e.Enrollments)
+                .Include(a => a.Assignments)
+                .AsSplitQuery()
+                .Include(s => s.Sections)
+                .ThenInclude(c => c.Contents)
+                .SingleOrDefaultAsync(c => c.Id == courseId && c.Enrollments.Any(e => e.UserId == userId));
+        }
     }
 }

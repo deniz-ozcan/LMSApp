@@ -11,7 +11,7 @@ using lmsapp.data.Concrete;
 namespace lmsapp.data.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20231007110533_InitialCreate")]
+    [Migration("20231008151443_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -22,11 +22,11 @@ namespace lmsapp.data.Migrations
 
             modelBuilder.Entity("lmsapp.entity.Assignment", b =>
                 {
-                    b.Property<int>("AssignmentID")
+                    b.Property<int>("AssignmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -41,7 +41,7 @@ namespace lmsapp.data.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AssignmentID");
+                    b.HasKey("AssignmentId");
 
                     b.HasIndex("CourseId");
 
@@ -50,14 +50,11 @@ namespace lmsapp.data.Migrations
 
             modelBuilder.Entity("lmsapp.entity.Content", b =>
                 {
-                    b.Property<int>("ContentID")
+                    b.Property<int>("ContentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SectionID")
+                    b.Property<int>("SectionId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
@@ -66,9 +63,9 @@ namespace lmsapp.data.Migrations
                     b.Property<string>("VideoUrl")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ContentID");
+                    b.HasKey("ContentId");
 
-                    b.HasIndex("SectionID");
+                    b.HasIndex("SectionId");
 
                     b.ToTable("Contents");
                 });
@@ -141,19 +138,19 @@ namespace lmsapp.data.Migrations
 
             modelBuilder.Entity("lmsapp.entity.Section", b =>
                 {
-                    b.Property<int>("SectionID")
+                    b.Property<int>("SectionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CourseID")
+                    b.Property<int>("CourseId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("SectionID");
+                    b.HasKey("SectionId");
 
-                    b.HasIndex("CourseID");
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Sections");
                 });
@@ -162,7 +159,9 @@ namespace lmsapp.data.Migrations
                 {
                     b.HasOne("lmsapp.entity.Course", "Course")
                         .WithMany("Assignments")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Course");
                 });
@@ -171,7 +170,7 @@ namespace lmsapp.data.Migrations
                 {
                     b.HasOne("lmsapp.entity.Section", "Section")
                         .WithMany("Contents")
-                        .HasForeignKey("SectionID")
+                        .HasForeignKey("SectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -193,7 +192,7 @@ namespace lmsapp.data.Migrations
                 {
                     b.HasOne("lmsapp.entity.Course", "Course")
                         .WithMany("Sections")
-                        .HasForeignKey("CourseID")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

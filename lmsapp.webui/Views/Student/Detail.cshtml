@@ -1,0 +1,98 @@
+@model InstructorCourse
+@section title {
+  <title>@Model.Course.Title</title>
+}
+@section css_files {
+  <style>
+    .accordion-item {
+      background-color: #fff;
+      border-bottom: 1px solid #00000020;
+    }
+
+    .bthover:hover {
+      background-color: #d1d7db;
+    }
+  </style>
+}
+<div class="row">
+  <div class="col-9 ps-0 pe-0">
+    <div class="row ps-0 pe-0">
+      <div class="card ps-0 pe-0" style="border:none;">
+        <iframe src="" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <form class="row mt-5" asp-controller="Student" asp-action="AssignmetSubmit">
+      <table class="table mt-3">
+        <thead>
+          <tr class="coverme">
+            <th scope="col"><button class="btn colorbut">Id<span aria-hidden="true"></span></button></th>
+            <th scope="col"><button class="btn colorbut">TITLE<span aria-hidden="true"></span></button></th>
+            <th scope="col"><button class="btn colorbut">DESCRIPTION<span aria-hidden="true"></span></button></th>
+            <th scope="col"><button class="btn colorbut">DUEDATE<span aria-hidden="true"></span></button></th>
+            <th scope="col"><button class="btn colorbut">FINISHED<span aria-hidden="true"></span></button></th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach (var assgn in Model.Course.Assignments)
+            {
+              <tr class="hoverme">
+                <td scope="row">@assgn.AssignmentId</td>
+                <td scope="row">@assgn.Title</td>
+                <td scope="row">@assgn.Description</td>
+                <td scope="row"> @assgn.DueDate</td>
+                <td scope="row">
+                  <div class="row justify-content-center">
+                    <input class="form-check-input" value="@assgn.AssignmentId" name="submitedAssn" type="checkbox"  @(assgn.IsSubmitted ? "checked" : "")>
+                  </div>
+                </td>
+              </tr>
+            }
+        </tbody>
+      </table>
+      <div class="row mt-3">
+        <div class="col-3 mx-auto">
+          <div class="text-center">
+              <button type="submit" class="btn btn-outline-primary">Submit Assignments</button>
+          </div>
+        </div>  
+      </div>
+    </form>
+  </div>
+  <div class="col-3 ps-0 pe-0">
+    <div class="accordion accordion-container" id="acco">
+      @foreach (var sec in Model.Course.Sections)
+      {
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section_@sec.SectionId">
+              @sec.Title
+            </button>
+          </h2>
+          <div id="section_@sec.SectionId" class="accordion-collapse collapse">
+            <div class="accordion-body  m-0 p-0">
+              <ul class="list-group">
+                @foreach (var cont in sec.Contents)
+                {
+                  <li class="list-group-item bthover" style="border-top: none;border-left: none;border-right: none;">
+                      <input class="form-check-input" type="text" value="@cont.VideoUrl" hidden>
+                      <button class="videobutton" style="border: none;background:none;text-align:left;">@cont.Title</button>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+@section JavaScript {
+  <script>
+    let btns = document.getElementsByClassName("videobutton");
+    for (let i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function () {
+        document.querySelector("iframe").src = btns[i].parentElement.firstElementChild.value;
+      });
+    }
+  </script>
+}

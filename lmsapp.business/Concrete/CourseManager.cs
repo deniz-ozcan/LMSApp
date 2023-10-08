@@ -71,5 +71,10 @@ namespace lmsapp.business.Concrete
         {
             return _unitofwork.Courses.GetAllAsync();
         }
+
+        public Task<Course> GetStudentCourseContentAsync(string userId, int courseId)
+        {
+            return _unitofwork.Courses.GetStudentCourseContentAsync(userId, courseId);
+        }
     }
 }
