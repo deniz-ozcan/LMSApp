@@ -1,0 +1,83 @@
+@model Course
+@section title {
+  <title>@Model.Title</title>
+}
+@section css_files {
+  <style>
+    .accordion-item {
+      background-color: #fff;
+      border-bottom: 1px solid #00000020;
+    }
+
+    .bthover:hover {
+      background-color: #d1d7db;
+    }
+  </style>
+}
+@{
+  var videoUrl = "" ;
+  if (Model.Sections.Count > 0)
+  {
+    videoUrl = Model.Sections[0].Contents[0].VideoUrl;
+  }
+}
+<div class="row">
+  <div class="col-9 ps-0 pe-0">
+    <div class="row ps-0 pe-0">
+      <div class="card ps-0 pe-0" style="border:none;">
+        <iframe src="@videoUrl" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card mb-3" style="border: none;">
+        <div class="row g-0 mt-3">
+            <div class="card-body">
+              <div class="list-group list-group-flush fs-5">
+                <li class="list-group-item" style="border:none;"><h1 class="fs-4" style="color:#000;display:inline;">@Model.Title</h1></li>
+                <li class="list-group-item" style="border:none;color:#666;">@Model.Description</li>
+                <li class="list-group-item" style="border:none;color:#666;">Total Hours: @Model.TotalHours</li>
+                <li class="list-group-item" style="border:none;color:#666;">Level: @Model.Level</li>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3 ps-0 pe-0">
+    <div class="accordion accordion-container" id="acco">
+      @foreach (var sec in Model.Sections)
+      {
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section_@sec.SectionId">
+              @sec.Title
+            </button>
+          </h2>
+          <div id="section_@sec.SectionId" class="accordion-collapse collapse">
+            <div class="accordion-body  m-0 p-0">
+              <ul class="list-group">
+                @foreach (var cont in sec.Contents)
+                {
+                  <li class="list-group-item bthover" style="border-top: none;border-left: none;border-right: none;">
+                      <input class="form-check-input" type="text" value="@cont.VideoUrl" hidden>
+                      <button class="videobutton" style="border: none;background:none;text-align:left;">@cont.Title</button>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+@section JavaScript {
+  <script>
+    let btns = document.getElementsByClassName("videobutton");
+    for (let i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function () {
+        document.querySelector("iframe").src = btns[i].parentElement.firstElementChild.value;
+      });
+    }
+  </script>
+}

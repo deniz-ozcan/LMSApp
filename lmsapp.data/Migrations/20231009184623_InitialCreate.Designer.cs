@@ -11,7 +11,7 @@ using lmsapp.data.Concrete;
 namespace lmsapp.data.Migrations
 {
     [DbContext(typeof(LMSContext))]
-    [Migration("20231008151443_InitialCreate")]
+    [Migration("20231009184623_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,6 +19,26 @@ namespace lmsapp.data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
+
+            modelBuilder.Entity("lmsapp.entity.Assignee", b =>
+                {
+                    b.Property<int>("AssigneeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AssignmentId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("isSubmitted")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AssigneeId");
+
+                    b.ToTable("Assignees");
+                });
 
             modelBuilder.Entity("lmsapp.entity.Assignment", b =>
                 {
@@ -34,9 +54,6 @@ namespace lmsapp.data.Migrations
 
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsSubmitted")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");

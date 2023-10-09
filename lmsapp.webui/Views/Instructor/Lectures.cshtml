@@ -1,4 +1,54 @@
-@model CourseViewModel
+@model List<Course>
 @section title {
-	<title>My Lectures | LMSApp</title>
+  <title>My Lectures | LMSApp</title>
 }
+@section css_files {
+  <style>
+    .fontapp {
+      font-family: SuisseWorks, Georgia, Times, 'Times New Roman', serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'
+    }
+  </style>
+}
+<div class="row" style="background-color: #2d2f31;padding-top:4.8rem;">
+  <div class="mt-3 mb-3" style="margin-left:220px;color: #fff;">
+    <h1 class="h3 fontapp" style="font-size:3rem;display:inline;">My Lectures</h1>
+    <a asp-controller="Instructor" asp-action="CourseCreate" type="button" class="btn btn-secondary m-0 pt-0 pb-0 mb-3" style="border: none;background:none;" title="Create Course">
+        <svg style="width: 40px;height: 40px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="#fff" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"/></svg>
+    </a>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row mt-3" style="padding-left: 200px;padding-right: 200px;">
+    @if (Model.Count == 0)
+    {
+      <div class="text-center fs-5 alertdanger">
+        <h1 class="h3">You didn't create any courses yet!</h1>
+      </div>
+    }
+    else
+    {
+      @foreach (var course in Model)
+      {
+        string cls = "";
+        if (course.isUpdated == true)
+        {
+          cls = "bg-primary";
+        }
+        <a asp-controller="Instructor" asp-action="Detail" asp-route-id="@course.Id" class="col-3 mb-3" style="text-decoration:none;color:black;">
+          <div class="card border-info @cls" style="height: 300px;">
+            <img src="@course.ImageUrl" alt="" class="card-img-top img-fluid" />
+            <div class="card-body" style="padding: 5px 5px;">
+              <p class="card-title" style="color: #2d2f31;">@course.Title</p>
+            </div>
+            <div class="card-footer" style="border: none;background-color:#fff;">
+              <ul class="list-group list-group-horizontal" style="border:none;list-style-type: none;color:#FFC000">
+                @for (int i = 0; i < (int)course.Rate; i++){<li>★</li>}
+                @for (int k = 0; k < 5 - (int)course.Rate; k++){<li style="color:#D8D8D8;">★</li>}
+              </ul>
+            </div>
+          </div>
+        </a>
+      }
+    }
+  </div>
+</div>

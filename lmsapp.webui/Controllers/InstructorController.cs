@@ -9,7 +9,6 @@ using lmsapp.webui.Identity;
 
 namespace lmsapp.webui.Controllers
 {
-    [Authorize(Roles = "Instructor")]
     public class InstructorController  : Controller
     {
         private readonly ICourseService _courseService;
@@ -25,9 +24,24 @@ namespace lmsapp.webui.Controllers
             _courseService = courseService;
             _userManager = userManager;
         }
-        public IActionResult Lectures() => View();
+        public async Task<IActionResult> Lectures()
+        {
+            var userId = _userManager.GetUserId(User);
+            var course = await _courseService.GetInstructorCoursesByUserIdAsync(userId);
+            return View(course);
+        }
+
+
+        public async Task<IActionResult> Detail(int id)
+        {
+            Course course = await _courseService.GetInstructorCourseContentAsync(id);
+            return course == null ? NotFound() : View(course);
+        }
+
+
         public IActionResult CourseCreate() => View();
 
+        [HttpPost]
         public async Task<IActionResult> CourseCreate(Course model)
         {
             var userId = _userManager.GetUserId(User);
@@ -49,22 +63,21 @@ namespace lmsapp.webui.Controllers
             }
             return View(model);
         }
-        public async Task<IActionResult> TaskCreate(Assignment model)
-        {
-            if(ModelState.IsValid)
-            {
-                await _assignmentService.CreateAsync(new Assignment
-                {
-                    Title = model.Title,
-                    Description = model.Description,
-                    DueDate = model.DueDate,
-                    CourseId = model.CourseId,
-                    IsSubmitted = false
-                });
-                return RedirectToAction("Lectures","Instructor");
-            }
-            return View("CourseCreate",model);
-        }
+        // public async Task<IActionResult> TaskCreate(Assignment model)
+        // {
+        //     if(ModelState.IsValid)
+        //     {
+        //         await _assignmentService.CreateAsync(new Assignment
+        //         {
+        //             Title = model.Title,
+        //             Description = model.Description,
+        //             DueDate = model.DueDate,
+        //             CourseId = model.CourseId,
+        //         });
+        //         return RedirectToAction("Lectures","Instructor");
+        //     }
+        //     return View("CourseCreate",model);
+        // }
         public async Task<IActionResult> SectionCreate(Section model)
         {
             if(ModelState.IsValid)

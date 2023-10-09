@@ -5,6 +5,7 @@ namespace lmsapp.data.Abstract
     {
         Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId);
         Task<Course> GetStudentCourseContentAsync(string userId, int courseId);
+        Task<Course> GetInstructorCourseContentAsync(int courseId);
         Task<List<Course>> GetInstructorCoursesByUserIdAsync(string userId);
         Task<Course> GetCourseByIdAsync(int id);
         Task<List<Course>> GetCoursesAsync(string q, int page, int pageSize);

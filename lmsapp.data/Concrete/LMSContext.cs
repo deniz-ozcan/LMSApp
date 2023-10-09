@@ -11,6 +11,7 @@ namespace lmsapp.data.Concrete
         public DbSet<Section> Sections { get; set; }
         public DbSet<Content> Contents { get; set; }
         public DbSet<Enrollment> Enrollments { get; set; }
+        public DbSet<Assignee> Assignees { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // modelBuilder.ApplyConfiguration(new CourseConfiguration());

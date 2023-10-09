@@ -62,7 +62,7 @@ namespace lmsapp.webui
             services.AddScoped<ISectionService, SectionManager>();
             services.AddScoped<IContentService, ContentManager>();
             services.AddScoped<ICourseService, CourseManager>();
-
+            services.AddScoped<IAssigneeService, AssigneeManager>();
             services.AddScoped<IEmailSender, SmtpEmailSender>(i =>
                 new SmtpEmailSender(
                     _configuration["EmailSender:Host"],
@@ -74,7 +74,7 @@ namespace lmsapp.webui
 
             services.AddControllersWithViews();
         }
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService, IEnrollmentService enrollmentService, IAssignmentService assignmentService, IContentService contentService, ISectionService sectionService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ICourseService courseService, IEnrollmentService enrollmentService, IAssignmentService assignmentService, IContentService contentService, ISectionService sectionService, IAssigneeService assigneeService)
         {
             app.UseStaticFiles();
             if (env.IsDevelopment())
@@ -93,7 +93,7 @@ namespace lmsapp.webui
                 endpoints.MapControllerRoute(name: "AdminRoleEdit", pattern: "Admin/Role/{id?}", defaults: new { controller = "Admin", action = "RoleUpdate" });
                 endpoints.MapControllerRoute(name: "AdminRoleCreate", pattern: "Admin/Role/Create", defaults: new { controller = "Admin", action = "RoleCreate" });
             });
-            SeedData.Seed(userManager, roleManager, courseService, configuration, enrollmentService, assignmentService, contentService, sectionService).Wait();
+            SeedData.Seed(userManager, roleManager, courseService, configuration, enrollmentService, assignmentService, contentService, sectionService, assigneeService).Wait();
         }
     }
 }

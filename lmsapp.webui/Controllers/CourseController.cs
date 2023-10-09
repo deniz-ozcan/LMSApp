@@ -66,15 +66,26 @@ namespace lmsapp.webui.Controllers
         [HttpPost]
         public async Task<IActionResult> Enroll(int courseId)
         {
-            if(!User.Identity.IsAuthenticated){
+            if (!User.Identity.IsAuthenticated)
+            {
                 return RedirectToAction("Login", "Account");
+            }
+            var user = await _userManager.GetUserAsync(User);
+            if (await _userManager.IsInRoleAsync(user, "Instructor"))
+            {
+                Course course = await _courseService.GetCourseByIdAsync(courseId);
+                if (course.InstructorId == user.Id)
+                {
+                    TempData["message"] = JsonConvert.SerializeObject(new AlertMessage() { Message = "You cannot enroll in your own course.", AlertType = "danger" });
+                    return RedirectToAction("Detail", "Course", new { id = courseId });
+                }
             }
             var userId = _userManager.GetUserId(User);
             if (userId != null)
             {
                 if (!_enrollmentService.isEnrolled(courseId, userId))
                 {
-                    await _enrollmentService.CreateAsync(new Enrollment(){CourseId = courseId, UserId = userId});
+                    await _enrollmentService.CreateAsync(new Enrollment() { CourseId = courseId, UserId = userId });
                     Course crs = await _courseService.GetCourseByIdAsync(courseId);
                     crs.EnrollmentCount++;
                     await _courseService.UpdateAsync(crs);

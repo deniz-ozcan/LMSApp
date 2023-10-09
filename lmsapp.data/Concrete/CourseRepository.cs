@@ -12,20 +12,16 @@ namespace lmsapp.data.Concrete
         {
             get { return context as LMSContext; }
         }
-
-
         public Task<List<Course>> GetAllCoursesAsync()
         {
             return LMSContext.Courses
                 .ToListAsync();
         }
-
         public Task<Course> GetCourseByIdAsync(int id)
         {
             return LMSContext.Courses
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
-
         public Task<List<Course>> GetCoursesAsync(string q, int page, int pageSize)
         {
             return LMSContext.Courses
@@ -35,19 +31,18 @@ namespace lmsapp.data.Concrete
                 .Take(pageSize)
                 .ToListAsync();
         }
-
         public Task<int> GetCoursesCountAsync(string q)
         {
             return LMSContext.Courses
                 .Where(c => string.IsNullOrEmpty(q) || c.Title.Contains(q) || c.Description.Contains(q))
                 .CountAsync();
         }
-
         public Task<List<Course>> GetInstructorCoursesByUserIdAsync(string userId)
         {
-            return LMSContext.Courses.Where(c => c.InstructorId == userId).ToListAsync();
+            return LMSContext.Courses
+                    .Where(c => c.InstructorId == userId)
+                    .ToListAsync();
         }
-
         public Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId)
         {
             return LMSContext.Courses
@@ -64,5 +59,31 @@ namespace lmsapp.data.Concrete
                 .ThenInclude(c => c.Contents)
                 .SingleOrDefaultAsync(c => c.Id == courseId && c.Enrollments.Any(e => e.UserId == userId));
         }
+        public Task<Course> GetInstructorCourseContentAsync(int courseId)
+        {
+            return LMSContext.Courses
+                    .Include(a => a.Assignments)
+                    .AsSplitQuery()
+                    .Include(s => s.Sections)
+                    .ThenInclude(c => c.Contents)
+                    .SingleOrDefaultAsync(c => c.Id == courseId);
+        }
     }
 }
+
+/*
+Assignment mtm User
+title
+description
+DueDate
+courseId
+List<Assignee> Assignees
+
+
+Assignee
+
+userId
+assignmentId
+isSubmitted
+
+*/

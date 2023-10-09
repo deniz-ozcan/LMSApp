@@ -14,14 +14,36 @@
     }
   </style>
 }
+@{
+  var videoUrl = "" ;
+  if (Model.Course.Sections.Count > 0)
+  {
+    videoUrl = Model.Course.Sections[0].Contents[0].VideoUrl;
+  }
+}
 <div class="row">
   <div class="col-9 ps-0 pe-0">
     <div class="row ps-0 pe-0">
       <div class="card ps-0 pe-0" style="border:none;">
-        <iframe src="" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
+        <iframe src="@videoUrl" width="100%" height="500" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
-    <form class="row mt-5" asp-controller="Student" asp-action="AssignmetSubmit">
+    <div class="row">
+      <div class="card mb-3" style="border: none;">
+        <div class="row g-0 mt-3">
+            <div class="card-body">
+              <div class="list-group list-group-flush fs-5">
+                <li class="list-group-item" style="border:none;"><h1 class="fs-4" style="color:#000;display:inline;">@Model.Course.Title</h1></li>
+                <li class="list-group-item" style="border:none;color:#666;">@Model.Course.Description</li>
+                <li class="list-group-item" style="border:none;color:#666;">Instructor: @Model.Instructor.FirstName @Model.Instructor.LastName </li>
+                <li class="list-group-item" style="border:none;color:#666;">Total Hours: @Model.Course.TotalHours</li>
+                <li class="list-group-item" style="border:none;color:#666;">Level: @Model.Course.Level</li>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    @* <form class="row mt-5" asp-controller="Student" asp-action="AssignmetSubmit">
       <table class="table mt-3">
         <thead>
           <tr class="coverme">
@@ -40,11 +62,6 @@
                 <td scope="row">@assgn.Title</td>
                 <td scope="row">@assgn.Description</td>
                 <td scope="row"> @assgn.DueDate</td>
-                <td scope="row">
-                  <div class="row justify-content-center">
-                    <input class="form-check-input" value="@assgn.AssignmentId" name="submitedAssn" type="checkbox"  @(assgn.IsSubmitted ? "checked" : "")>
-                  </div>
-                </td>
               </tr>
             }
         </tbody>
@@ -56,7 +73,7 @@
           </div>
         </div>  
       </div>
-    </form>
+    </form> *@
   </div>
   <div class="col-3 ps-0 pe-0">
     <div class="accordion accordion-container" id="acco">

@@ -12,6 +12,21 @@ namespace lmsapp.data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Assignees",
+                columns: table => new
+                {
+                    AssigneeId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: true),
+                    AssignmentId = table.Column<int>(type: "INTEGER", nullable: false),
+                    isSubmitted = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assignees", x => x.AssigneeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Courses",
                 columns: table => new
                 {
@@ -42,8 +57,7 @@ namespace lmsapp.data.Migrations
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     DueDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    CourseId = table.Column<int>(type: "INTEGER", nullable: false),
-                    IsSubmitted = table.Column<bool>(type: "INTEGER", nullable: false)
+                    CourseId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -141,6 +155,9 @@ namespace lmsapp.data.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Assignees");
+
             migrationBuilder.DropTable(
                 name: "Assignments");
 

@@ -1,6 +1,6 @@
 namespace lmsapp.business.Abstract
 {
-    public interface IService<T> 
+    public interface IGenericService<T> 
     {
         Task CreateAsync(T entity);
         Task<List<T>> GetAllAsync();
