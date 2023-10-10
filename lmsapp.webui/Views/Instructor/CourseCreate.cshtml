@@ -1,55 +1,76 @@
+@model Course
 @section title {
-    <title>Create Course | LMSApp</title>
+  <title>Create Course | LMSApp</title>
 }
+@section css_files {
+  <style>
+    .accordion-item {
+      background-color: #fff;
+    }
 
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="text-center">Create Course</h3>
-                </div>
-                <div class="card-body">
-                    <form asp-controller="Instructor" asp-action="CourseCreate" method="POST">
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" name="Title" placeholder="Enter course title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="Description" rows="4" placeholder="Enter course description" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="rate">Rate</label>
-                            <input type="number" class="form-control" id="rate" name="Rate" placeholder="Enter course rate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="totalHours">Total Hours</label>
-                            <input type="number" class="form-control" id="totalHours" name="TotalHours" placeholder="Enter total hours" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="level">Level</label>
-                            <select class="form-control" id="level" name="Level" required>
-                                <option value="Beginner">Beginner</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Expert">Expert</option>
-                                <option value="All Levels">All Levels</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <input type="text" class="form-control" id="category" name="Category" placeholder="Enter course category" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="imageUrl">Image URL</label>
-                            <input type="url" class="form-control" id="imageUrl" name="ImageUrl" placeholder="Enter image URL">
-                        </div>
-                        <div class="text-center mt-4">
-                            <button type="submit" class="btn btn-primary">Save Course</button>
-                        </div>
-                    </form>
-                </div>
+    .bthover:hover {
+      background-color: #d1d7db;
+    }
+  </style>
+}
+<form class="container-sm mt-3" asp-controller="Instructor" asp-action="CourseCreate" method="POST">
+  <div class="row justify-content-center">
+    <div class="card col-9 p-0">
+      <div class="card-header bg-dark" style="color:#2fd3bb;font-size:24px;">
+        <div class="card-title text-center pt-3">Create Course</div>
+      </div>
+      <div class="card-body">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row mb-3">
+          <div class="row">
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff; id=" inputGroup-sizing-sm">Title</span>
+              <input type="text" asp-for="@Model.Title" class="form-control" aria-describedby="inputGroup-sizing-sm">
             </div>
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Category</span>
+              <input type="text" asp-for="@Model.Category" class="form-control" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Description</span>
+              <textarea type="text" asp-for="@Model.Description" class="form-control" aria-describedby="inputGroup-sizing-sm" style="resize: none;"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Total Hours</span>
+              <input type="text" asp-for="@Model.TotalHours" class="form-control" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">ImageUrl</span>
+              <input type="text" asp-for="@Model.ImageUrl" class="form-control" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Level</span>
+              <select asp-for="@Model.Level" class="form-control" aria-describedby="inputGroup-sizing-sm">
+                <option selected disabled>Seçiniz</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Expert</option>
+                <option value="All Levels">All Levels</option>
+              </select>
+              <span asp-validation-for="@Model.Level" class="text-danger"></span>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+</form>
+@section JavaScript
+{
+  <script>
+
+  </script>
+  <script src="~/js/jquery.validate.js"></script>
+  <script src="~/js/jquery.validate.unobtrusive.js"></script>
+}

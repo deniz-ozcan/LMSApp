@@ -42,7 +42,7 @@
                 {
                     <div class="input-group input-group-sm mb-3">
                       <div class="input-group-text">
-                        @if (rolename == "Student")
+                        @if (rolename == "Student" || rolename == "Admin")
                         {
                           <input class="form-check-input mt-0" type="checkbox" name="selectedRoles" onclick="return false;" value="@rolename"  checked>
                         }else{
@@ -52,7 +52,7 @@
                       <label class="form-control" for="@rolename" style="border-left: 0px;">@rolename</label>
                     </div>
                 }
-                @if (!ViewBag.Roles.Contains("Instructor"))
+                @if (!ViewBag.Roles.Contains("Instructor") && !User.IsInRole("Admin"))
                 {
                   <div class="input-group input-group-sm mb-3">
                     <div class="input-group-text" style="background-color: #2cc270;">

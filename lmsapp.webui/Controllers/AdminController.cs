@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using lmsapp.business.Abstract;
 using lmsapp.webui.Identity;
 using lmsapp.webui.Models;
+using lmsapp.entity;
 
 namespace lmsapp.webui.Controllers
 {
@@ -176,7 +177,6 @@ namespace lmsapp.webui.Controllers
             {
                 _courseService.Delete(entity);
             }
-
             var msg = new AlertMessage()
             {
                 Message = $"{entity.Title} isimli Kurs silindi.",
@@ -185,7 +185,6 @@ namespace lmsapp.webui.Controllers
             TempData["message"] = JsonConvert.SerializeObject(msg);
             return RedirectToAction("AdminPanel");
         }
-
         public async Task<IActionResult> DeleteRole(string RoleId)
         {
             var role = await _roleManager.FindByIdAsync(RoleId);
@@ -201,7 +200,6 @@ namespace lmsapp.webui.Controllers
             TempData["message"] = JsonConvert.SerializeObject(msg);
             return RedirectToAction("AdminPanel");
         }
-
         public async Task<IActionResult> DeleteUser(string UserId)
         {
             var user = await _userManager.FindByIdAsync(UserId);
@@ -217,5 +215,18 @@ namespace lmsapp.webui.Controllers
             TempData["message"] = JsonConvert.SerializeObject(msg);
             return RedirectToAction("AdminPanel");
         }
+    
+        public async Task<IActionResult> CourseDetail(int id)
+        {
+            Course course = await _courseService.GetCourseContentByIdAsync(id);
+            var instructor = await _userManager.FindByIdAsync(course.InstructorId);
+            var instructorCourse = new InstructorCourse()
+            {
+                Course = course,
+                Instructor = instructor
+            };
+            return instructorCourse == null ? NotFound() : View(instructorCourse);
+        }
+    
     }
 }

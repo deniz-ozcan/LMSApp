@@ -9,6 +9,6 @@ namespace lmsapp.entity
         public DateTime DueDate { get; set; }
         public Course Course { get; set; } 
         public int CourseId { get; set; }
-        List<Assignee> Assignees { get; set; }
+        public List<Assignee> Assignees { get; set; }
     }
 }

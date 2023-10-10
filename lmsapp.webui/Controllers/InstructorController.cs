@@ -39,21 +39,16 @@ namespace lmsapp.webui.Controllers
         }
 
 
-        public IActionResult CourseCreate()
-        {
-
-            return View();
-        }
+        public IActionResult CourseCreate() => View();
 
         [HttpPost]
         public async Task<IActionResult> CourseCreate(Course model)
         {
-            var userId = _userManager.GetUserId(User);
             if(ModelState.IsValid)
             {
                 await _courseService.CreateAsync(new Course
                 {
-                    InstructorId = userId,
+                    InstructorId = _userManager.GetUserId(User),
                     Title = model.Title,
                     Description = model.Description,
                     Rate = model.Rate,

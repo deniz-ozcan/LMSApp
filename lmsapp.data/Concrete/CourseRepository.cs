@@ -68,6 +68,16 @@ namespace lmsapp.data.Concrete
                     .ThenInclude(c => c.Contents)
                     .SingleOrDefaultAsync(c => c.Id == courseId);
         }
+
+        public Task<Course> GetCourseContentByIdAsync(int courseId)
+        {
+            return LMSContext.Courses
+                .Include(a => a.Assignments)
+                .AsSplitQuery()
+                .Include(s => s.Sections)
+                .ThenInclude(c => c.Contents)
+                .SingleOrDefaultAsync(c => c.Id == courseId);
+        }
     }
 }
 

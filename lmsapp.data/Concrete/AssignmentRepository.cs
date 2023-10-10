@@ -14,7 +14,10 @@ namespace lmsapp.data.Concrete
 
         public Task<List<Assignment>> GetAssignmentsByUserIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            return LMSContext.Assignments
+                .Include(a => a.Assignees)
+                .Where(a => a.Assignees.Any(a => a.UserId == userId))
+                .ToListAsync();
         }
     }
 }

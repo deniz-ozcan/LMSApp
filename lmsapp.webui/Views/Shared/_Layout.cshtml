@@ -43,11 +43,17 @@
               <li class="nav-item">
                 <a asp-controller="Instructor" asp-action="Lectures" class="nav-link">My Lectures</a>
               </li>
+              <li class="nav-item">
+                <a asp-controller="Instructor" asp-action="Assignments" class="nav-link">Assignments</a>
+              </li>
             }
             if (User.IsInRole("Student"))
             {
               <li class="nav-item">
                 <a asp-controller="Student" asp-action="Enrollments" class="nav-link">My Learning</a>
+              </li>
+              <li class="nav-item">
+                <a asp-controller="Student" asp-action="Assignments" class="nav-link">My Tasks</a>
               </li>
             }
             if (User.IsInRole("Admin"))

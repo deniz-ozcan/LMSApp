@@ -5,6 +5,7 @@ namespace lmsapp.business.Abstract
     public interface ICourseService : IGenericService<Course>, IValidator<Course>
     {
         Task<List<Course>> GetStudentCoursesByUserIdAsync(string userId);
+        Task<Course> GetCourseContentByIdAsync(int courseId);
         Task<Course> GetStudentCourseContentAsync(string userId, int courseId);
         Task<Course> GetInstructorCourseContentAsync(int courseId);
         Task<List<Course>> GetInstructorCoursesByUserIdAsync(string userId);

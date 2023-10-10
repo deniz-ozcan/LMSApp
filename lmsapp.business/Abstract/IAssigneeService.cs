@@ -4,6 +4,5 @@ namespace lmsapp.business.Abstract
 {
     public interface IAssigneeService : IGenericService<Assignee>
     {
-        
     }
 }

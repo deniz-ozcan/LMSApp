@@ -12,9 +12,5 @@ namespace lmsapp.data.Concrete
         {
             get { return context as LMSContext; }
         }
-        public Task<List<Assignee>> GetAssigneesByUserIdAsync(string userId)
-        {
-            return LMSContext.Assignees.Where(a => a.UserId == userId).ToListAsync();
-        }
     }
 }

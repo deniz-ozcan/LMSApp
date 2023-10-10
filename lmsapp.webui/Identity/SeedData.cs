@@ -105,11 +105,9 @@ namespace lmsapp.webui.Identity
                                 await courseService.UpdateAsync(crs);
                                 await assigneeService.CreateAsync(new Assignee { AssignmentId = id, UserId = user.Id });
                             }
-
                         }
                         await userManager.AddToRoleAsync(user, role);
                     }
-                    await userManager.AddToRoleAsync(user, "Student");
                 }
             }
         }

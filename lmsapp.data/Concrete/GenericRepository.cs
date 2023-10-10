@@ -22,9 +22,10 @@ namespace lmsapp.data.Concrete
         {
             return context.Set<TEntity>().ToListAsync();
         }
-        public async Task UpdateAsync(TEntity entity)
+        public Task UpdateAsync(TEntity entity)
         {
-            await Task.Run(() => context.Set<TEntity>().Update(entity));
+            context.Set<TEntity>().Update(entity);
+            return Task.CompletedTask;
         }
     }
 }

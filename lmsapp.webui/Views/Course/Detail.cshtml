@@ -36,6 +36,10 @@
                 <button class="btn btn-outline-primary btn-lg" type="submit" style="min-width:100px;background-color:#f27a1a">Enroll</button>
               </form>
             </div>
+          }else{
+            <div class="input-group justify-content-center mb-3">
+              <a asp-controller="Admin" asp-action="CourseDetail" asp-route-id="@Model.Course.Id" class="btn btn-outline-primary btn-lg" style="min-width:100px;background-color:#f27a1a">View</a>
+            </div>
           }
         </div>
       </div>

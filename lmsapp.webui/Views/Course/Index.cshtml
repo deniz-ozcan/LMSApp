@@ -28,13 +28,9 @@
         {
           @foreach (var course in Model.Courses)
           {
-            string cls = "";
-            if (course.Course.isUpdated == true)
-            {
-              cls = "bg-primary";
-            }
+            
             <a asp-controller="Course" asp-action="Detail" asp-route-id="@course.Course.Id" class="col-sm-3 mb-3" style="text-decoration:none;color:black;">
-              <div class="card mb-3 me-3 border-info @cls popupcard">
+              <div class="card mb-3 me-3 border-info popupcard">
                 <img src="@course.Course.ImageUrl" alt="" class="card-img-top img-fluid" />
                 <div class="card-body" style="padding: 2rem 0rem;">
                   <p class="card-title info" style="color: #2d2f31;">@course.Course.Title</p>
