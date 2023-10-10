@@ -39,7 +39,11 @@ namespace lmsapp.webui.Controllers
         }
 
 
-        public IActionResult CourseCreate() => View();
+        public IActionResult CourseCreate()
+        {
+
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> CourseCreate(Course model)
