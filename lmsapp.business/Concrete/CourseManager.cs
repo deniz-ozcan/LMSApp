@@ -22,7 +22,7 @@ namespace lmsapp.business.Concrete
             if (Validation(entity))
             {
                 _unitofwork.Courses.UpdateAsync(entity);
-                _unitofwork.Save();
+                _unitofwork.SaveAsync();
                 return Task.FromResult(entity);
             }
             return null;

@@ -52,7 +52,7 @@ namespace lmsapp.webui.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _courseService.UpdateAsync(new Course
+                /*await _courseService.UpdateAsync(new Course
                 {
                     InstructorId = _userManager.GetUserId(User),
                     Title = model.Title,
@@ -63,7 +63,10 @@ namespace lmsapp.webui.Controllers
                     Category = model.Category,
                     ImageUrl = model.ImageUrl,
                     isUpdated = true
-                });
+                });*/
+                model.InstructorId = _userManager.GetUserId(User);
+                model.isUpdated = true;
+                await _courseService.UpdateAsync(model);
                 return RedirectToAction("Lectures", "Instructor");
             }
             return View(model);
