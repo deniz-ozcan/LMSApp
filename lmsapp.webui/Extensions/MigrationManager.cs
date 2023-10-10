@@ -19,11 +19,11 @@ namespace lmsapp.webui.Extensions
                 {
                     Console.WriteLine("LMSContext migration failed");
                 }
-                using (var applicationContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>())
+                using (var ApplicationContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>())
                 {
                     try
                     {
-                        applicationContext.Database.Migrate();
+                        ApplicationContext.Database.Migrate();
                     }
                     catch (Exception)
                     {

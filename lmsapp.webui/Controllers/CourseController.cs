@@ -12,11 +12,15 @@ namespace lmsapp.webui.Controllers
     {
         private readonly ICourseService _courseService;
         private readonly IEnrollmentService _enrollmentService;
+        private readonly IAssignmentService _assignmentService;
+        private readonly IAssigneeService _assigneeService;
         private readonly UserManager<User> _userManager;
-        public CourseController(ICourseService courseService, IEnrollmentService enrollmentService, UserManager<User> userManager)
+        public CourseController(IEnrollmentService enrollmentService, IAssignmentService assignmentService, IAssigneeService assigneeService, ICourseService courseService, UserManager<User> userManager)
         {
-            _courseService = courseService;
             _enrollmentService = enrollmentService;
+            _assignmentService = assignmentService;
+            _assigneeService = assigneeService;
+            _courseService = courseService;
             _userManager = userManager;
         }
         public IActionResult LandingPage()
@@ -87,6 +91,11 @@ namespace lmsapp.webui.Controllers
                 {
                     await _enrollmentService.CreateAsync(new Enrollment() { CourseId = courseId, UserId = userId });
                     Course crs = await _courseService.GetCourseByIdAsync(courseId);
+                    var assignments =  await _assignmentService.GetAssignmentsByCourseIdAsync(courseId);
+                    foreach (var a in assignments)
+                    {
+                        await _assigneeService.CreateAsync(new Assignee() { AssignmentId = a.AssignmentId, UserId = userId, isSubmitted = false });
+                    }
                     crs.EnrollmentCount++;
                     await _courseService.UpdateAsync(crs);
                 }

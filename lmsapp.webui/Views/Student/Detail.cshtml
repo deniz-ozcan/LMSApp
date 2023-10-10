@@ -18,7 +18,8 @@
   var videoUrl = "" ;
   if (Model.Course.Sections.Count > 0)
   {
-    videoUrl = Model.Course.Sections[0].Contents[0].VideoUrl;
+    if (Model.Course.Sections[0].Contents.Count > 0)
+      videoUrl = Model.Course.Sections[0].Contents[0].VideoUrl;
   }
 }
 <div class="row">

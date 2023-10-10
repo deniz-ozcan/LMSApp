@@ -88,10 +88,8 @@ namespace lmsapp.webui
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller=Course}/{action=LandingPage}/{id?}");
                 endpoints.MapControllerRoute(name: "SearchCourses", pattern: "Courses/Search", defaults: new { controller = "Course", action = "Search" });
-                endpoints.MapControllerRoute(name: "AdminPanel", pattern: "Admin/Panel", defaults: new { controller = "Admin", action = "AdminPanel" });
                 endpoints.MapControllerRoute(name: "AdminUserEdit", pattern: "Admin/User/{id?}", defaults: new { controller = "Admin", action = "UserUpdate" });
                 endpoints.MapControllerRoute(name: "AdminRoleEdit", pattern: "Admin/Role/{id?}", defaults: new { controller = "Admin", action = "RoleUpdate" });
-                endpoints.MapControllerRoute(name: "AdminRoleCreate", pattern: "Admin/Role/Create", defaults: new { controller = "Admin", action = "RoleCreate" });
             });
             SeedData.Seed(userManager, roleManager, courseService, configuration, enrollmentService, assignmentService, contentService, sectionService, assigneeService).Wait();
         }

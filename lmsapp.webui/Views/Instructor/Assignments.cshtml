@@ -1,0 +1,52 @@
+@model List<AssigneeModel>
+@section title {
+    <title>Assignments | LMSApp</title>
+}
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="card p-0">
+            <div class="card-header" style="background-color: #404040;color:#ff8800">
+                <div class="card-title text-center pt-3 fs-3">Assignments
+                    <a asp-controller="Instructor" asp-action="AssignmentCreate" type="button" class="btn btn-secondary m-0 pt-0 pb-0" style="border: none;background:none;" title="Create Assignment">
+                        <svg style="width: 40px;height: 40px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="#fff" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr class="coverme">
+                            <th scope="col"><button class="btn colorbut">Id<span aria-hidden="true"></span></button></th>
+                            <th scope="col"><button class="btn colorbut">COURSE TITLE<span aria-hidden="true"></span></button></th>
+                            <th scope="col"><button class="btn colorbut">TITLE<span aria-hidden="true"></span></button></th>
+                            <th scope="col"><button class="btn colorbut">DESCRIPTION<span aria-hidden="true"></span></button></th>
+                            <th scope="col"><button class="btn colorbut">DUEDATE<span aria-hidden="true"></span></button></th>
+                            <th scope="col"><button class="btn colorbut">USERNAME<span aria-hidden="true"></span></button></th>
+                            <th scope="col"><button class="btn colorbut">FINISHED<span aria-hidden="true"></span></button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var assgn in Model)
+                        {
+                            <tr class="hoverme">
+                                <td scope="row">@assgn.Id</td>
+                                <td scope="row">@(@assgn.CourseTitle.Length > 20 ? @assgn.CourseTitle.Substring(0, 20) + "..." : @assgn.CourseTitle)</td>
+                                <td scope="row">@assgn.Title</td>
+                                <td scope="row">@(@assgn.Description.Length > 20 ? @assgn.Description.Substring(0, 20) + "..." : @assgn.Description)</td>
+                                <td scope="row">@assgn.DueDate.ToString().Substring(0, 9)</td>
+                                <td scope="row">@assgn.Username</td>
+                                <td scope="row">
+                                    <div class="row justify-content-center">
+                                        <input class="form-check-input" name="submitedAssn" value="@assgn.Id" onclick="return false;" type="checkbox" @(assgn.IsSubmitted ? "checked" : "")>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

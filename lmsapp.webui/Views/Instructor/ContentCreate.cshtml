@@ -1,12 +1,13 @@
-@model Assignment
+@model Content
 @section title {
-  <title>Create Task | LMSApp</title>
+  <title>Create Content | LMSApp</title>
 }
-<form class="container-sm mt-3" asp-controller="Instructor" asp-action="AssignmentCreate" method="POST">
+
+<form class="container-sm mt-3" asp-controller="Instructor" asp-action="ContentCreate" method="POST">
   <div class="row justify-content-center">
     <div class="card col-9 p-0">
       <div class="card-header bg-dark" style="color:#2fd3bb;font-size:24px;">
-        <div class="card-title text-center pt-3">Create Assignment</div>
+        <div class="card-title text-center pt-3">Create Content</div>
       </div>
       <div class="card-body">
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -17,17 +18,13 @@
               <input type="text" asp-for="@Model.Title" class="form-control" aria-describedby="inputGroup-sizing-sm">
             </div>
             <div class="col input-group input-group-sm mb-3">
-              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Description</span>
-              <input type="text" asp-for="@Model.Description" class="form-control" aria-describedby="inputGroup-sizing-sm">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Video Url</span>
+              <input type="text" asp-for="@Model.VideoUrl" class="form-control" aria-describedby="inputGroup-sizing-sm">
             </div>
           </div>
           <div class="row">
-            <div class="col input-group date" id="datepicker">
-              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">DueDate</span>
-              <input type="date" class="form-control" id="date" asp-for="@Model.DueDate"/>
-            </div>
             <div class="col input-group input-group-sm">
-              <select asp-for="@Model.CourseId" asp-items="@ViewBag.Courses" class="form-control" aria-describedby="inputGroup-sizing-sm">
+              <select asp-for="@Model.SectionId" asp-items="@ViewBag.Sections" class="form-control" aria-describedby="inputGroup-sizing-sm">
                 <option selected disabled>Seçiniz</option>
               </select>
             </div>
@@ -40,8 +37,3 @@
     </div>
   </div>
 </form>
-@section JavaScript
-{
-  <script src="~/js/jquery.validate.js"></script>
-  <script src="~/js/jquery.validate.unobtrusive.js"></script>
-}

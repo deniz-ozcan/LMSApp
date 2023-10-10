@@ -56,5 +56,10 @@ namespace lmsapp.business.Concrete
         {
             return await _unitofwork.Assignments.GetAssignmentsByUserIdAsync(userId);
         }
+
+        public Task<List<Assignment>> GetAssignmentsByCourseIdAsync(int courseId)
+        {
+            return _unitofwork.Assignments.GetAssignmentsByCourseIdAsync(courseId);
+        }
     }
 }

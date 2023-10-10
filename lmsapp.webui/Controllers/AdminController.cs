@@ -182,7 +182,7 @@ namespace lmsapp.webui.Controllers
                 Message = $"{entity.Title} isimli Kurs silindi.",
                 AlertType = "danger"
             };
-            TempData["message"] = JsonConvert.SerializeObject(msg);
+            
             return RedirectToAction("AdminPanel");
         }
         public async Task<IActionResult> DeleteRole(string RoleId)
@@ -227,6 +227,6 @@ namespace lmsapp.webui.Controllers
             };
             return instructorCourse == null ? NotFound() : View(instructorCourse);
         }
-    
+
     }
 }

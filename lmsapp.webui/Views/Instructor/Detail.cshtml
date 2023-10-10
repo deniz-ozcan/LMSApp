@@ -8,17 +8,24 @@
       background-color: #fff;
       border-bottom: 1px solid #00000020;
     }
-
+    .accordion-container {
+      height: 2000px; 
+      overflow: auto;
+      top: 0;
+      transition: top 0.2s ease-in-out 0s;
+    }
     .bthover:hover {
       background-color: #d1d7db;
     }
+    
   </style>
 }
 @{
   var videoUrl = "";
   if (Model.Sections.Count > 0)
   {
-    videoUrl = Model.Sections[0].Contents[0].VideoUrl;
+    if (Model.Sections[0].Contents.Count > 0)
+      videoUrl = Model.Sections[0].Contents[0].VideoUrl;
   }
 }
 <div class="row">
@@ -63,19 +70,29 @@
         </div>
       }
     </div>
-
+    <div class="mt-3 mb-3 d-flex justify-content-center">
+      <a class="btn btn-primary" asp-controller="Instructor" asp-action="CourseEdit" asp-route-id="@Model.Id">Edit</a>
+    </div>
   </div>
   <div class="col-3 ps-0 pe-0">
+    <form class="mt-3 d-flex justify-content-center" asp-controller="Instructor" asp-action="SectionCreate" method="POST">
+        <input type="text" name="sending" value="@Model.Id" hidden>
+        <input type="text" class="form-control" placeholder="Section Title" name="sending" style="max-width: 200px;">
+        <button type="submit" class="btn btn-primary">Add Section</button>
+    </form>
+    <div class="mt-3 mb-3 d-flex justify-content-center">
+      <a class="btn btn-primary" asp-controller="Instructor" asp-action="ContentCreate" asp-route-id="@Model.Id">Add Content</a>
+    </div>
     <div class="accordion accordion-container" id="acco">
       @foreach (var sec in Model.Sections)
       {
         <div class="accordion-item">
           <h2 class="accordion-header">
-            <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section_@sec.SectionId">
+            <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Exsection_@sec.SectionId">
               @sec.Title
             </button>
           </h2>
-          <div id="section_@sec.SectionId" class="accordion-collapse collapse">
+          <div id="Exsection_@sec.SectionId" class="accordion-collapse collapse">
             <div class="accordion-body  m-0 p-0">
               <ul class="list-group">
                 @foreach (var cont in sec.Contents)
@@ -90,6 +107,7 @@
           </div>
         </div>
       }
+      
     </div>
   </div>
 </div>

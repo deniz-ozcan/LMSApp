@@ -131,7 +131,7 @@
           @if (Model.Courses.Count == 0)
           {
             <div class="text-center fs-5 alertdanger">
-              <h1 class="h3">No Product</h1>
+              <h1 class="h3">No Course</h1>
             </div>
           }
           else
@@ -187,7 +187,7 @@
                                   </div>
                                 </td>
                                 <td>
-                                  <form asp-controller="Admin" asp-action="DeleteProduct">
+                                  <form asp-controller="Admin" asp-action="DeleteCourse">
                                     <input type="hidden" name="id" value="@course.Course.Id" />
                                     <button type="submit" class="btn btn-outline-danger">Delete</button>
                                   </form>

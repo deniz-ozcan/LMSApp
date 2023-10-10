@@ -1,22 +1,65 @@
-
-    <div class="accordion accordion-container" id="acco">
-      <div class="accordion-item">
-        <h2 class="accordion-header">
-          <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#section1">
-            <input type="text" class="form-control" placeholder="Section Title" style="max-width: 200px;">
-          </button>
-        </h2>
-        <div id="section1" class="accordion-collapse collapse">
-          <div class="accordion-body  m-0 p-0">
-            <ul class="list-group">
-              <li class="list-group-item" style="border-top: none;border-left: none;border-right: none;">
-                <div class="row input-group">
-                  <input type="text" class="col form-control" placeholder="Content Title">
-                  <input type="text" class="col form-control" placeholder="Content Video Url">
-                </div>
-              </li>
-            </ul>
+@model Course
+@section title {
+  <title>Create Course | LMSApp</title>
+}
+<form class="container-sm mt-3" asp-controller="Instructor" asp-action="CourseEdit" method="POST">
+  <div class="row justify-content-center">
+    <div class="card col-9 p-0">
+      <div class="card-header bg-dark" style="color:#2fd3bb;font-size:24px;">
+        <div class="card-title text-center pt-3">Create Course</div>
+      </div>
+      <div class="card-body">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="row mb-3">
+          <div class="row">
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff; id=" inputGroup-sizing-sm">Title</span>
+              <input type="text" asp-for="@Model.Title" class="form-control" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Category</span>
+              <input type="text" asp-for="@Model.Category" class="form-control" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Description</span>
+              <textarea type="text" asp-for="@Model.Description" class="form-control" aria-describedby="inputGroup-sizing-sm" style="resize: none;"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Total Hours</span>
+              <input type="text" asp-for="@Model.TotalHours" class="form-control" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="col input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">ImageUrl</span>
+              <input type="text" asp-for="@Model.ImageUrl" class="form-control" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text bg-secondary" style="color:#fff;" id="inputGroup-sizing-sm">Level</span>
+              <select asp-for="@Model.Level" class="form-control" aria-describedby="inputGroup-sizing-sm">
+                <option selected disabled>Seçiniz</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Expert</option>
+                <option value="All Levels">All Levels</option>
+              </select>
+              <span asp-validation-for="@Model.Level" class="text-danger"></span>
+            </div>
+          </div>
+          <div class="mt-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-primary">Save</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</form>
+@section JavaScript
+{
+  <script src="~/js/jquery.validate.js"></script>
+  <script src="~/js/jquery.validate.unobtrusive.js"></script>
+}
