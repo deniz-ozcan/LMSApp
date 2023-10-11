@@ -8,15 +8,6 @@
       @await Html.PartialAsync("_categories")
     </div>
     <div class="col-9" style="min-width:1050px;">
-      <div class="row">
-        <div class="d-flex justify-content-end" style="margin-bottom: 5px;">
-          <select class="form-select" style="background-color:#20c997;color:#fff;">
-            <option value="" selected disabled>Sort By</option>
-            <option value="rate_asc">High Rate</option>
-            <option value="rate_desc">Low Rate</option>
-          </select>
-        </div>
-      </div>
       <div class="card-group">
         @if (Model.Courses.Count == 0)
         {

@@ -1,16 +1,38 @@
 
 <div class="filtme justify-content-center">
-  <form class="list-group align-self-center" action="/Course/FilterCourses">
+  <form class="list-group align-self-center" asp-controller="Course" asp-action="FilterCourses" method="GET">
     <div class="accordion accordion-container" id="acco" style="min-width: 245px;">
       <div class="accordion-item">
         <h2 class="accordion-header">
-          <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Price" aria-expanded="false" aria-controls="Price">
+          <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Level" aria-expanded="false" aria-controls="Level">
             Level
           </button>
         </h2>
-        <div id="Price" class="accordion-collapse collapse">
+        <div id="Level" class="accordion-collapse collapse">
           <div class="accordion-body">
-            
+            <select class="form-control" name="level" aria-describedby="inputGroup-sizing-sm">
+              <option selected disabled>Seçiniz</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Expert">Expert</option>
+              <option value="All Levels">All Levels</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button btnhover collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#Sortby" aria-expanded="false" aria-controls="Sortby">
+            SortBy
+          </button>
+        </h2>
+        <div id="Sortby" class="accordion-collapse collapse">
+          <div class="accordion-body">
+            <select class="form-control" name="sortBy" aria-describedby="inputGroup-sizing-sm">
+              <option selected disabled>Seçiniz</option>
+              <option value="-rate">High Rate</option>
+              <option value="rate">Low Rate</option>
+            </select>
           </div>
         </div>
       </div>
@@ -22,7 +44,7 @@
           <div class="accordion-body">
             @for (int i = 5; i > 0; i--){
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="rate_rad" id="rate_rad_@i" value="@i">
+              <input class="form-check-input" type="radio" name="rate" id="rate_rad_@i" value="@i">
               <label class="form-check-label" for="rate_rad_@i">
                 <ul class="list-group list-group-horizontal" style="list-style-type: none;">
                   @for (int j = 0; j < i; j++){<li style="color:#FFC000;">★</li>}

@@ -86,5 +86,15 @@ namespace lmsapp.business.Concrete
         {
             return _unitofwork.Courses.GetCourseContentByIdAsync(courseId);
         }
+
+        public Task<List<Course>> GetFilteredCoursesAsync(string q, float rate, string sortBy, string level, int page, int pageSize)
+        {
+            return _unitofwork.Courses.GetFilteredCoursesAsync(q, rate, sortBy, level, page, pageSize);
+        }
+
+        public Task<int> GetFilteredCoursesCountAsync(string q, float rate, string sortBy, string level)
+        {
+            return _unitofwork.Courses.GetFilteredCoursesCountAsync(q, rate, sortBy, level);
+        }
     }
 }

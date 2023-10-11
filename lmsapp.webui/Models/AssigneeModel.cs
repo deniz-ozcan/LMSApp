@@ -15,5 +15,6 @@ namespace lmsapp.webui.Models
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
         public bool IsSubmitted { get; set; }
+        public IFormFile AttachedFile { get; set; }
     }
 }

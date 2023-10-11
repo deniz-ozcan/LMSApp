@@ -17,6 +17,7 @@
 								<th scope="col"><button class="btn colorbut">TITLE<span aria-hidden="true"></span></button></th>
 								<th scope="col"><button class="btn colorbut">DESCRIPTION<span aria-hidden="true"></span></button></th>
 								<th scope="col"><button class="btn colorbut">DUEDATE<span aria-hidden="true"></span></button></th>
+								<th scope="col"><button class="btn colorbut">PDF<span aria-hidden="true"></span></button></th>
 								<th scope="col"><button class="btn colorbut">FINISHED<span aria-hidden="true"></span></button></th>
 							</tr>
 						</thead>
@@ -28,10 +29,18 @@
 									<td scope="row">@assgn.Assignment.Title</td>
 									<td scope="row">@assgn.Assignment.Description</td>
 									<td scope="row"> @assgn.Assignment.DueDate</td>
+									<td scope="row" >
+										@if(assgn.IsSubmitted){
+											<li style="list-style-type: none;">File is Submitted</li>
+										}else{
+											<input type="file" style="max-width: 200px;" class="form-control" id="attachedFile" name="AttachedFile" aria-describedby="inputGroup-sizing-sm">
+										}
+										
+									</td>
 									<td scope="row">
 										<div class="row justify-content-center">
 											<input type="hidden" name="assignmentIds" value="@assgn.Assignment.AssignmentId">
-											<input class="form-check-input"  name="submitedAssn" value="@assgn.AssigneeId" onclick="return @((!assgn.IsSubmitted).ToString().ToLower());"  type="checkbox" @(assgn.IsSubmitted ? "checked" : "")>
+											<input class="form-check-input" name="submitedAssn" value="@assgn.AssigneeId" onclick="return @((!assgn.IsSubmitted).ToString().ToLower());" type="checkbox" @(assgn.IsSubmitted ? "checked" : "")>
 										</div>
 									</td>
 								</tr>

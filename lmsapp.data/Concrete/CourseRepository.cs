@@ -78,22 +78,34 @@ namespace lmsapp.data.Concrete
                 .ThenInclude(c => c.Contents)
                 .SingleOrDefaultAsync(c => c.Id == courseId);
         }
+
+        public Task<List<Course>> GetFilteredCoursesAsync(string q, float rate, string sortBy, string level, int page, int pageSize)
+        {
+            var courses = LMSContext.Courses
+                        .OrderBy(c => c.Id)
+                        .Where(c => string.IsNullOrEmpty(q) || c.Title.Contains(q) || c.Description.Contains(q))
+                        .Where(c => rate == 0 || c.Rate >= rate)
+                        .Where(c => string.IsNullOrEmpty(level) || c.Level == level)
+                        .Skip((page - 1) * pageSize)
+                        .Take(pageSize).AsQueryable();
+            if(sortBy == "rate")
+            {
+                courses = courses.OrderByDescending(c => c.Rate);
+            }
+            else if(sortBy == "-rate")
+            {
+                courses = courses.OrderBy(c => c.Rate);
+            }
+            return courses.ToListAsync();
+        }
+
+        public Task<int> GetFilteredCoursesCountAsync(string q, float rate, string sortBy, string level)
+        {
+            return LMSContext.Courses
+                        .Where(c => string.IsNullOrEmpty(q) || c.Title.ToUpper().Contains(q.ToUpper()) || c.Description.ToUpper().Contains(q.ToUpper()))
+                        .Where(c => rate == 0 || c.Rate >= rate)
+                        .Where(c => string.IsNullOrEmpty(level) || c.Level == level)
+                        .CountAsync();
+        }
     }
 }
-
-/*
-Assignment mtm User
-title
-description
-DueDate
-courseId
-List<Assignee> Assignees
-
-
-Assignee
-
-userId
-assignmentId
-isSubmitted
-
-*/

@@ -103,5 +103,32 @@ namespace lmsapp.webui.Controllers
             }
             return RedirectToAction("Login", "Account");
         }
+
+
+        public async Task<IActionResult> FilterCourses(string q, float rate, string sortBy, string level, int page = 1)
+        {
+            var courses = await _courseService.GetFilteredCoursesAsync(q, rate, sortBy, level, page, 8);
+            var instructorCourses = new List<InstructorCourse>();
+            foreach (var course in courses)
+            {
+                var instructor = await _userManager.FindByIdAsync(course.InstructorId);
+                instructorCourses.Add(new InstructorCourse()
+                {
+                    Course = course,
+                    Instructor = instructor
+                });
+            }
+            return View("Index", new CourseViewModel()
+            {
+                PageInfo = new PageInfo()
+                {
+                    TotalItems = await _courseService.GetFilteredCoursesCountAsync(q, rate, sortBy, level),
+                    CurrentPage = page,
+                    ItemsPerPage = 8,
+                    CurrentCategory = q
+                },
+                Courses = instructorCourses
+            });
+        }
     }
 }

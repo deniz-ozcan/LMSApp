@@ -4,6 +4,7 @@ using lmsapp.webui.Models;
 using Microsoft.AspNetCore.Identity;
 using lmsapp.webui.Identity;
 using lmsapp.entity;
+using System.Net.Http.Headers;
 
 namespace lmsapp.webui.Controllers
 {
@@ -51,7 +52,7 @@ namespace lmsapp.webui.Controllers
             return instructorCourse == null ? NotFound() : View(instructorCourse);
         }
         [HttpPost]
-        public async Task<IActionResult> AssignmetSubmit(int[] submitedAssn, int[] assignmentIds){
+        public async Task<IActionResult> AssignmetSubmit(int[] submitedAssn, int[] assignmentIds, List<IFormFile> files ){
             for (int i = 0; i < submitedAssn.Count(); i++)
             {
                 await _assigneeService.UpdateAsync(
@@ -62,6 +63,24 @@ namespace lmsapp.webui.Controllers
                         isSubmitted = true
                     }
                 );
+                try
+                {
+                    if (files[i] != null)
+                    {
+                        Console.WriteLine(files[i].FileName);
+                        var fileName = ContentDispositionHeaderValue.Parse(files[i].ContentDisposition).FileName.Trim('"');
+                        var filePath = Path.Combine("wwwroot/uploads/assignments", fileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await files[i].CopyToAsync(stream);
+                        }
+                    }
+                }
+                catch (System.Exception)
+                {
+                    
+                }
+                
             }
             return RedirectToAction("Assignments", "Student");
         }
@@ -82,7 +101,23 @@ namespace lmsapp.webui.Controllers
             }
             return View(studentAssignments);
         }
-
-
+        // [HttpPost]
+        // public async Task<IActionResult> Submit(AssigneeModel model)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         if (model.AttachedFile != null)
+        //         {
+        //             Console.WriteLine(model.AttachedFile.FileName);
+        //             var fileName = ContentDispositionHeaderValue.Parse(model.AttachedFile.ContentDisposition).FileName.Trim('"');
+        //             var filePath = Path.Combine("wwwroot/uploads/assignments", fileName);
+        //             using (var stream = new FileStream(filePath, FileMode.Create))
+        //             {
+        //                 await model.AttachedFile.CopyToAsync(stream);
+        //             }
+        //         }
+        //     }
+        //     return RedirectToAction("Assignments", model);
+        // }
     }
 }

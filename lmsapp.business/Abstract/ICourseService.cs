@@ -12,5 +12,7 @@ namespace lmsapp.business.Abstract
         Task<Course> GetCourseByIdAsync(int id);
         Task<List<Course>> GetCoursesAsync(string q, int page, int pageSize);
         Task<int> GetCoursesCountAsync(string q);
+        Task<List<Course>> GetFilteredCoursesAsync(string q, float rate, string sortBy, string level, int page, int pageSize);
+        Task<int> GetFilteredCoursesCountAsync(string q, float rate, string sortBy, string level);
     }
 }
