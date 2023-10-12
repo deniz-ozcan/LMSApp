@@ -67,7 +67,6 @@ namespace lmsapp.webui.Controllers
                 {
                     if (files[i] != null)
                     {
-                        Console.WriteLine(files[i].FileName);
                         var fileName = ContentDispositionHeaderValue.Parse(files[i].ContentDisposition).FileName.Trim('"');
                         var filePath = Path.Combine("wwwroot/uploads/assignments", fileName);
                         using (var stream = new FileStream(filePath, FileMode.Create))
@@ -101,23 +100,5 @@ namespace lmsapp.webui.Controllers
             }
             return View(studentAssignments);
         }
-        // [HttpPost]
-        // public async Task<IActionResult> Submit(AssigneeModel model)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         if (model.AttachedFile != null)
-        //         {
-        //             Console.WriteLine(model.AttachedFile.FileName);
-        //             var fileName = ContentDispositionHeaderValue.Parse(model.AttachedFile.ContentDisposition).FileName.Trim('"');
-        //             var filePath = Path.Combine("wwwroot/uploads/assignments", fileName);
-        //             using (var stream = new FileStream(filePath, FileMode.Create))
-        //             {
-        //                 await model.AttachedFile.CopyToAsync(stream);
-        //             }
-        //         }
-        //     }
-        //     return RedirectToAction("Assignments", model);
-        // }
     }
 }

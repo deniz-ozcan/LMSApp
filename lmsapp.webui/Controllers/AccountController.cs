@@ -94,12 +94,12 @@ namespace lmsapp.webui.Controllers
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                ModelState.AddModelError("", "Bu kullanıcı adı ile daha önce hesap oluşturulmamış");
+                ModelState.AddModelError("", "No account has been created with this username before.");
                 return View(model);
             }
             if (!await _userManager.IsEmailConfirmedAsync(user))
             {
-                ModelState.AddModelError("", "Lütfen email hesabınıza gelen link ile üyeliğinizi onaylayınız.");
+                ModelState.AddModelError("", "Please confirm your membership with the link sent to your email account.");
                 return View(model);
             }
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
@@ -107,7 +107,7 @@ namespace lmsapp.webui.Controllers
             {
                 return RedirectToAction("Index", "Course");
             }
-            ModelState.AddModelError("", "Girilen kullanıcı adı veya parola yanlış");
+            ModelState.AddModelError("", "The username or password entered is incorrect.");
             return View(model);
         }
         [HttpPost]
@@ -136,10 +136,15 @@ namespace lmsapp.webui.Controllers
                     userId = user.Id,
                     token = code
                 });
-                await _emailSender.SendEmailAsync(model.Email, "Hesabınızı onaylayınız.", $"Lütfen email hesabınızı onaylamak için linke <a href='http://localhost:5278{url}'>tıklayınız.</a>");
+                await _emailSender.SendEmailAsync(model.Email, "Confirm Email.", $"Please click on the <a href='http://localhost:5278{url}'>link</a> to confirm your email account.");
+                var msg = new AlertMessage()
+                {
+                    Message = "Please confirm your email account",
+                    AlertType = "warning"
+                };
                 return RedirectToAction("Login", "Account");
             }
-            ModelState.AddModelError("", "Bilinmeyen hata oldu lütfen tekrar deneyiniz.");
+            ModelState.AddModelError("", "An unknown error occurred.");
             return View(model);
         }
         public async Task<IActionResult> Logout()

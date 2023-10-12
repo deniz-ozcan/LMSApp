@@ -189,7 +189,6 @@ namespace lmsapp.webui.Controllers
         }
 
         public async Task<IActionResult> ContentCreate(int id){
-            Console.WriteLine(id);
             var course = await _courseService.GetInstructorCourseContentAsync(id);
             var selectList = new List<SelectListItem>();
             foreach (var item in course.Sections)
