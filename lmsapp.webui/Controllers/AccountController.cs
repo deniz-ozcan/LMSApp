@@ -75,7 +75,7 @@ namespace lmsapp.webui.Controllers
                         {
                             await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles).ToArray());
                         }
-                        return RedirectToAction("Index", "Course");
+                        return RedirectToAction("List", "Course");
                     }
                 }
                 return RedirectToAction("Profile");
@@ -105,7 +105,7 @@ namespace lmsapp.webui.Controllers
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Course");
+                return RedirectToAction("List", "Course");
             }
             ModelState.AddModelError("", "The username or password entered is incorrect.");
             return View(model);
@@ -194,7 +194,7 @@ namespace lmsapp.webui.Controllers
         {
             if (userId == null || token == null)
             {
-                return RedirectToAction("Course", "Index");
+                return RedirectToAction("Course", "List");
             }
             _ = new ResetPasswordModel { Token = token };
             return View();
@@ -209,7 +209,7 @@ namespace lmsapp.webui.Controllers
             User user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                return RedirectToAction("Course", "Index");
+                return RedirectToAction("Course", "List");
             }
             IdentityResult result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             return result.Succeeded ? RedirectToAction("Login", "Account") : View(model);

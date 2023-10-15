@@ -27,13 +27,13 @@ namespace lmsapp.webui.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Course");
+                return RedirectToAction("List", "Course");
             }
             return View();
         }
-        public async Task<IActionResult> Index(string q, int page = 1)
+        public async Task<IActionResult> List(string q, float rate, string sortBy, string level, int page = 1)
         {
-            var courses = await _courseService.GetCoursesAsync(q, page, 8);
+            var courses = await _courseService.GetFilteredCoursesAsync(q, rate, sortBy, level, page, 8);
             var instructorCourses = new List<InstructorCourse>();
             foreach (var course in courses)
             {
@@ -44,16 +44,16 @@ namespace lmsapp.webui.Controllers
                     Instructor = instructor
                 });
             }
-            return View(new CourseViewModel()
+            return View("Index", new CourseViewModel()
             {
                 PageInfo = new PageInfo()
                 {
-                    TotalItems = await _courseService.GetCoursesCountAsync(q),
+                    TotalItems = await _courseService.GetFilteredCoursesCountAsync(q, rate, sortBy, level),
                     CurrentPage = page,
                     ItemsPerPage = 8,
-                    CurrentCategory = q
                 },
-                Courses = instructorCourses
+                Courses = instructorCourses,
+                isFiltered = true
             });
         }
         public async Task<IActionResult> Detail(int id)
@@ -91,7 +91,7 @@ namespace lmsapp.webui.Controllers
                 {
                     await _enrollmentService.CreateAsync(new Enrollment() { CourseId = courseId, UserId = userId });
                     Course crs = await _courseService.GetCourseByIdAsync(courseId);
-                    var assignments =  await _assignmentService.GetAssignmentsByCourseIdAsync(courseId);
+                    var assignments = await _assignmentService.GetAssignmentsByCourseIdAsync(courseId);
                     foreach (var a in assignments)
                     {
                         await _assigneeService.CreateAsync(new Assignee() { AssignmentId = a.AssignmentId, UserId = userId, isSubmitted = false });
@@ -102,33 +102,6 @@ namespace lmsapp.webui.Controllers
                 return RedirectToAction("Enrollments", "Student");
             }
             return RedirectToAction("Login", "Account");
-        }
-
-
-        public async Task<IActionResult> FilterCourses(string q, float rate, string sortBy, string level, int page = 1)
-        {
-            var courses = await _courseService.GetFilteredCoursesAsync(q, rate, sortBy, level, page, 8);
-            var instructorCourses = new List<InstructorCourse>();
-            foreach (var course in courses)
-            {
-                var instructor = await _userManager.FindByIdAsync(course.InstructorId);
-                instructorCourses.Add(new InstructorCourse()
-                {
-                    Course = course,
-                    Instructor = instructor
-                });
-            }
-            return View("Index", new CourseViewModel()
-            {
-                PageInfo = new PageInfo()
-                {
-                    TotalItems = await _courseService.GetFilteredCoursesCountAsync(q, rate, sortBy, level),
-                    CurrentPage = page,
-                    ItemsPerPage = 8,
-                    CurrentCategory = q
-                },
-                Courses = instructorCourses
-            });
         }
     }
 }

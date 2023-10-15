@@ -26,7 +26,7 @@
       }
       else
       {
-        <a class="navbar-brand" asp-controller="Course" asp-action="Index" style="color: #F50057;">LMSApp</a>
+        <a class="navbar-brand" asp-controller="Course" asp-action="List" style="color: #F50057;">LMSApp</a>
       }
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar">
         <span class="navbar-toggler-icon"></span>
@@ -34,7 +34,7 @@
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a asp-controller="Course" asp-action="Index" class="nav-link">Courses</a>
+            <a asp-controller="Course" asp-action="List" class="nav-link">Courses</a>
           </li>
           @if (User.Identity.IsAuthenticated)
           {

@@ -19,7 +19,7 @@
         {
           @foreach (var course in Model.Courses)
           {
-            
+
             <a asp-controller="Course" asp-action="Detail" asp-route-id="@course.Course.Id" class="col-sm-3 mb-3" style="text-decoration:none;color:black;">
               <div class="card mb-3 me-3 border-info popupcard">
                 <img src="@course.Course.ImageUrl" alt="" class="card-img-top img-fluid" />
@@ -32,8 +32,14 @@
                 <div class="list-group list-group-horizontal">
                   <li class="list-group-item p-0 pt-2 itemsing1" style="font-size:1rem;border:none;">
                     <ul class="list-group list-group-horizontal" style="list-style-type: none;font-weight: 400;color:#FFC000">
-                      @for (int i = 0; i < (int)course.Course.Rate ; i++){<li>★</li>}
-                      @for (int k = 0; k < 5 - (int)course.Course.Rate; k++){<li style="color:#D8D8D8;">★</li>}
+                      @for (int i = 0; i < (int)course.Course.Rate; i++)
+                      {
+                        <li>★</li>
+                      }
+                      @for (int k = 0; k < 5 - (int)course.Course.Rate; k++)
+                      {
+                        <li style="color:#D8D8D8;">★</li>
+                      }
                     </ul>
                   </li>
                 </div>

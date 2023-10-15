@@ -22,19 +22,17 @@ namespace lmsapp.data.Concrete
             return LMSContext.Courses
                 .SingleOrDefaultAsync(c => c.Id == id);
         }
-        public Task<List<Course>> GetCoursesAsync(string q, int page, int pageSize)
+        public Task<List<Course>> GetCoursesAsync(int page, int pageSize)
         {
             return LMSContext.Courses
                 .OrderBy(c => c.Id)
-                .Where(c => string.IsNullOrEmpty(q) || c.Title.Contains(q) || c.Description.Contains(q))
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
         }
-        public Task<int> GetCoursesCountAsync(string q)
+        public Task<int> GetCoursesCountAsync()
         {
             return LMSContext.Courses
-                .Where(c => string.IsNullOrEmpty(q) || c.Title.Contains(q) || c.Description.Contains(q))
                 .CountAsync();
         }
         public Task<List<Course>> GetInstructorCoursesByUserIdAsync(string userId)

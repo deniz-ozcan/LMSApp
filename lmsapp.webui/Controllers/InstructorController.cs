@@ -33,43 +33,28 @@ namespace lmsapp.webui.Controllers
             var course = await _courseService.GetInstructorCoursesByUserIdAsync(userId);
             return View(course);
         }
-
-
         public async Task<IActionResult> Detail(int id)
         {
             Course course = await _courseService.GetInstructorCourseContentAsync(id);
+            var selectList = new List<SelectListItem>();
+            foreach (var item in course.Sections)
+            {
+                selectList.Add(new SelectListItem { Value = item.SectionId.ToString(), Text = item.Title });
+            }
+            ViewBag.Sect = selectList;
             return course == null ? NotFound() : View(course);
         }
-
-        public async Task<IActionResult> CourseEdit(int id)
-        {
-            Course course = await _courseService.GetInstructorCourseContentAsync(id);
-            return course == null ? NotFound() : View(course);
-        }
-
         [HttpPost]
         public async Task<IActionResult> CourseEdit(Course model)
         {
             if (ModelState.IsValid)
             {
-                /*await _courseService.UpdateAsync(new Course
-                {
-                    InstructorId = _userManager.GetUserId(User),
-                    Title = model.Title,
-                    Description = model.Description,
-                    Rate = model.Rate,
-                    TotalHours = model.TotalHours,
-                    Level = model.Level,
-                    Category = model.Category,
-                    ImageUrl = model.ImageUrl,
-                    isUpdated = true
-                });*/
                 model.InstructorId = _userManager.GetUserId(User);
                 model.isUpdated = true;
                 await _courseService.UpdateAsync(model);
                 return RedirectToAction("Lectures", "Instructor");
             }
-            return View(model);
+            return View("Detail",model);
         }
         public IActionResult CourseCreate() => View();
         public async Task<IActionResult> Assignments()
@@ -100,7 +85,6 @@ namespace lmsapp.webui.Controllers
             }
             return View(assignments);
         }
-
         [HttpPost]
         public async Task<IActionResult> CourseCreate(Course model)
         {
@@ -122,7 +106,6 @@ namespace lmsapp.webui.Controllers
             }
             return View(model);
         }
-
         public async Task<IActionResult> AssignmentCreate()
         {
             var courses = await _courseService.GetInstructorCoursesByUserIdAsync(_userManager.GetUserId(User));
@@ -134,7 +117,6 @@ namespace lmsapp.webui.Controllers
             ViewBag.Courses = selectList;
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> AssignmentCreate(Assignment model)
         {
@@ -168,7 +150,7 @@ namespace lmsapp.webui.Controllers
                     await _assigneeService.CreateAsync(new Assignee
                     {
                         UserId = student.UserId,
-                        AssignmentId =  lastIds.LastOrDefault().AssignmentId,
+                        AssignmentId = lastIds.LastOrDefault().AssignmentId,
                         isSubmitted = student.isSubmitted
                     });
                 }
@@ -178,41 +160,25 @@ namespace lmsapp.webui.Controllers
             return View("CourseCreate", model);
         }
         [HttpPost]
-        public async Task<IActionResult> SectionCreate(string[] sending)
+        public async Task<IActionResult> SectionCreate(string[] sectional)
         {
             await _sectionService.CreateAsync(new Section
             {
-                CourseId = int.Parse(sending[0]),
-                Title = sending[1],
+                CourseId = int.Parse(sectional[1]),
+                Title = sectional[0],
             });
-            return RedirectToAction("Detail", "Instructor", new { id = int.Parse(sending[0]) });
+            return RedirectToAction("Detail", "Instructor", new { id = int.Parse(sectional[1]) });
         }
-
-        public async Task<IActionResult> ContentCreate(int id){
-            var course = await _courseService.GetInstructorCourseContentAsync(id);
-            var selectList = new List<SelectListItem>();
-            foreach (var item in course.Sections)
-            {
-                selectList.Add(new SelectListItem { Value = item.SectionId.ToString(), Text = item.Title });
-            }
-            ViewBag.Sections = selectList;
-            return View();
-        }
-
         [HttpPost]
-        public async Task<IActionResult> ContentCreate(Content model)
+        public async Task<IActionResult> ContentCreate(string[] contentinal)
         {
-            if (ModelState.IsValid)
+            await _contentService.CreateAsync(new Content
             {
-                await _contentService.CreateAsync(new Content
-                {
-                    Title = model.Title,
-                    SectionId = model.SectionId,
-                    VideoUrl = model.VideoUrl,
-                });
-                return RedirectToAction("ContentCreate", "Instructor", new { id = model.SectionId });
-            }
-            return View("CourseCreate", model);
+                Title = contentinal[1],
+                VideoUrl = contentinal[2],
+                SectionId = int.Parse(contentinal[3])
+            });
+            return RedirectToAction("Detail", "Instructor", new { id = int.Parse(contentinal[0]) });
         }
     }
 }

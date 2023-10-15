@@ -36,13 +36,13 @@ namespace lmsapp.business.Concrete
         {
             return _unitofwork.Courses.GetCourseByIdAsync(id);
         }
-        public Task<List<Course>> GetCoursesAsync(string q, int page, int pageSize)
+        public Task<List<Course>> GetCoursesAsync(int page, int pageSize)
         {
-            return _unitofwork.Courses.GetCoursesAsync(q, page, pageSize);
+            return _unitofwork.Courses.GetCoursesAsync(page, pageSize);
         }
-        public Task<int> GetCoursesCountAsync(string q)
+        public Task<int> GetCoursesCountAsync()
         {
-            return _unitofwork.Courses.GetCoursesCountAsync(q);
+            return _unitofwork.Courses.GetCoursesCountAsync();
         }
         public Task<List<Course>> GetInstructorCoursesByUserIdAsync(string userId)
         {
